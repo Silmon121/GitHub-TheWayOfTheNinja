@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt0n45pkert4i"]
+
+[ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_uh7pg"]
+[ext_resource type="Texture2D" uid="uid://dgb7rugkmitm7" path="res://MainMenu/Sprites/MainMenu_BG.png" id="2_1gvo6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jlktm"]
+font_size = 30
+font_color = Color(0.870588, 0.827451, 0, 1)
+
+[node name="mainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.995281)
+script = ExtResource("1_uh7pg")
+
+[node name="MarginContainer - Buttons" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -63.5448
+offset_right = 59.0
+offset_bottom = 75.4552
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer - Buttons"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="startButton" type="Button" parent="MarginContainer - Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="optionsButton" type="Button" parent="MarginContainer - Buttons/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="exitButton" type="Button" parent="MarginContainer - Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -124.0
+offset_right = 120.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "The Way of The Ninja"
+label_settings = SubResource("LabelSettings_jlktm")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuBg" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(320, 160.759)
+texture = ExtResource("2_1gvo6")
+
+[connection signal="pressed" from="MarginContainer - Buttons/VBoxContainer/startButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer - Buttons/VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]

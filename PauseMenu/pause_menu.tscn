@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://b72fqj16r1ugy"]
+
+[ext_resource type="Script" path="res://PauseMenu/pause_menu.gd" id="1_i0yhh"]
+
+[node name="pauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i0yhh")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -100.0
+offset_right = 92.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pause" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "=Paused="
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="resumeButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="exitButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="Panel/VBoxContainer/resumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]

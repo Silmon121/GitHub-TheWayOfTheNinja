@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bih8pbmx2k0uf"]
+
+[ext_resource type="Script" path="res://Player/animations/Combat/projectiles/FireBall1.gd" id="1_juuu1"]
+[ext_resource type="Texture2D" uid="uid://brc87or8cq5ft" path="res://Player/animations/Combat/projectiles/fireball1.png" id="2_5538g"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r3ldn"]
+radius = 12.0
+height = 26.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w6sue"]
+radius = 12.0
+height = 26.0
+
+[node name="FireBall1" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_juuu1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5538g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 0)
+shape = SubResource("CapsuleShape2D_r3ldn")
+
+[node name="fireBall1Area" type="Area2D" parent="."]
+position = Vector2(8, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fireBall1Area"]
+shape = SubResource("CapsuleShape2D_w6sue")
+
+[connection signal="area_entered" from="fireBall1Area" to="." method="_on_fire_ball_1_area_area_entered"]
