@@ -5,7 +5,7 @@ var spawnPos: Vector2
 var spawnRot: float
 @export var projectileSpeed = 400;
 func _physics_process(delta):
-	velocity.x = direction * projectileSpeed * delta
+	position.x += direction * projectileSpeed * delta
 	move_and_slide()
 func _ready():
 	global_position = spawnPos

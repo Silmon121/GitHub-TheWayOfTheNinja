@@ -14,37 +14,47 @@ class_name Player
 @export var sprintSpeed: int = 225 #RUN SPEED
 @export var jumpVelocity: int  = -400 #jUMP SPEED
 @onready var currentSpeed: int = speed #HOLDS CURRENT PLAYER SPEED WHEN PLAYER JUMPS
-#BOOL
-@onready var direction = "Right";
-@onready var lastMoveDirection_combat = 1;
-
-#Combat
-
-#Health declaration
+#DIRECTION
+@onready var moveDirection = 0; #MAIN SOURCE FOR OTHER DIRECTION VARIABLES
+@onready var animationDirection = "Right"; #USED IN ANIMATIONS
+@onready var lastMoveDirection = 1; #USED IN COMBAT
+#PROGRESS BARS
+#HEALTH
 signal healthChanged
 @export var maxHealth: int = 100;
 @onready var currentHealth: int = maxHealth
 @onready var isHurt = false;
-
-#Stamina declaration
+#STAMINA
 signal staminaChanged #Bars will catch this signal
 @export var maxStamina: float = 100;
 @onready var currentStamina: float = maxStamina;
 @export var staminaRecoverRate: float = 0.5;
 @export var staminaDepletion: float = 0.5;
 @onready var staminaDepleated: bool = false;
-
-#Chakra declaration
+#CHAKRA
 signal chakraChanged
 @export var maxChakra: float = 80;
 @onready var currentChakra: float = maxChakra;
 @export var chakraRecoveryRate: float = 0.5;
-#Chakra combat
 @export var fireball1_cast: float = 20;
 @onready var fireBallReady: bool = true;
+#COMBAT
+#UNARMED_COMBAT
+#ARMED_COMBAT
+#CHAKRA_COMBAT
 
-#Handle movement
-func movement(delta, moveDirection):
+#OCCURS CONTINUOUSLY THROUGHOUT THE GAME
+func _physics_process(delta):
+	if(tutorialDojo.paused == false): #IF MENU ISN'T OPENED
+		directionControl() #DETERMINES DIRECTION FOR METHODS BELOW !!NEEDS TO BE FIRST TO COMMIT!!
+		movement(delta,func():staminaControl())
+		move_and_slide()
+		updateAnimation()
+		combat()
+		chakraControl()
+#MOVEMENT - ALLOWS PLAYER TO MOVE, BUT DOESN'T CHANGE ANIMATIONS!
+func movement(delta,staminaCheck:Callable):
+	staminaCheck.call()
 	if(is_on_floor()):
 		if(moveDirection != 0):
 			#RUN MOVEMENT
@@ -62,40 +72,34 @@ func movement(delta, moveDirection):
 		#APPLY GRAVITY
 		velocity.y += gravity * delta
 		position.x += currentSpeed * moveDirection *delta
-			
-#Handle animations
-func updateAnimation(moveDirection):
-	#DETERMINES THE DIRECTION OF ANIMATION
-	if moveDirection == 1: 
-		direction = "Right"
-	elif moveDirection == -1:
-		direction = "Left"
+#ANIMATIONS - ALLOWS TO CHANGE PLAYER ANIMATIONS, BUT DOESN'T MAKE HIM MOVE!
+func updateAnimation():
 	#IS ON FLOOR ANIMATIONS
 	if is_on_floor():
 		#IDLE ANIMATION
 		if moveDirection == 0:
-			animation.play("idle"+ direction)
+			animation.play("idle"+ animationDirection)
 		#WALK AND RUN ANIMATION
 		elif (moveDirection != 0):
 			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
-				animation.play("run"+direction)
+				animation.play("run"+animationDirection)
 			else:
-				animation.play("walk"+direction)
+				animation.play("walk"+animationDirection)
 	else :
 		#JUMP ANIMATION
 		if velocity.y < 0:
-			animation.play("jump"+ direction)
+			animation.play("jump"+ animationDirection)
 		#FALL ANIMATION
 		elif velocity.y > 0:
-			animation.play("fall"+ direction)
-func combat(moveDirection):
-	#Katana combat
-	#Chakra combat
+			animation.play("fall"+ animationDirection)
+#COMBAT - ALLOWS PLAYER TO ATTACK
+func combat():
+	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
-		fireBall1_instance.direction = lastMoveDirection_combat
+		fireBall1_instance.direction = lastMoveDirection
 		fireBallReady = false
-		if (lastMoveDirection_combat == -1):
+		if (lastMoveDirection == -1):
 			fireBall1_instance.spawnRot = -91.2
 			fireBall1_instance.spawnPos = global_position - Vector2(30,0)
 		else:
@@ -104,37 +108,15 @@ func combat(moveDirection):
 		dojoScene.add_child.call_deferred(fireBall1_instance)
 		currentChakra -= fireball1_cast
 		chakraChanged.emit()
-#Regenerate chakra
-func chakraRegen():
-	if(Input.is_action_pressed("regenerateChakra") and currentChakra + chakraRecoveryRate < maxChakra):
-		currentChakra += chakraRecoveryRate
-		chakraChanged.emit()
-	elif(Input.is_action_pressed("regenerateChakra")):
-		currentChakra = maxChakra
-		chakraChanged.emit()
-#Apply physics
-func _physics_process(delta):
-	#Determines direction in which player wants to move
-	var moveDirection = 0
-	if (Input.is_action_pressed("left") or Input.is_action_pressed("right")):
-		moveDirection = Input.get_axis("left", "right");
-	if(tutorialDojo.paused == false):
-		movement(delta, moveDirection)
-		staminaControl(moveDirection)
-		updateAnimation(moveDirection)
-		move_and_slide()
-		combat(moveDirection)
-		chakraRegen()
-		
-#Registers, when the player will colide with enemy.
+#COLIDE REGISTRATION
+#WHEN PLAYER COLIDES WITH AN ENEMY
 func _on_hurt_box_area_entered(area):
 	if area.name == "enemyArea":
 		currentHealth -= 10
 	healthChanged.emit()
-func _on_fire_ball_cd_timeout():
-	fireBallReady = true;
-	$FireBallCD.start()
-func staminaControl(moveDirection):
+#CONTROL_FUNCTIONS
+#STAMINA_CONTROL
+func staminaControl():
 	#STAMINA DEPLETION CONTROL
 	if (currentStamina == 0):
 		staminaDepleated = true
@@ -159,6 +141,34 @@ func staminaControl(moveDirection):
 				else:
 					if (currentStamina > 0):
 						currentStamina -= staminaDepletion
-		if(Input.is_action_just_pressed("jump")and currentStamina >= 10 and staminaDepleated == false):
-			currentStamina -= 10
+	if(Input.is_action_just_pressed("jump")and currentStamina >= 10 and staminaDepleated == false):
+		currentStamina -= 10
 	staminaChanged.emit()
+#DIRECTION_CONTROL
+func directionControl():
+	moveDirection = 0
+	if (Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+		moveDirection = Input.get_axis("left", "right");
+	if(moveDirection == 1 or moveDirection == -1):
+			lastMoveDirection = moveDirection
+	#DETERMINES THE DIRECTION OF ANIMATION
+	if moveDirection == 1: 
+		animationDirection = "Right"
+	elif moveDirection == -1:
+		animationDirection = "Left"
+#CHAKRA_CONTROL
+func chakraControl():
+	if(Input.is_action_pressed("regenerateChakra") and currentChakra + chakraRecoveryRate < maxChakra):
+		currentChakra += chakraRecoveryRate
+		chakraChanged.emit()
+	elif(Input.is_action_pressed("regenerateChakra")):
+		currentChakra = maxChakra
+		chakraChanged.emit()
+#TIMERS - ON_TIME_OUT
+#STAMINA STARTS RECOVERING AFTER COOLDOWN
+func _on_stamina_recover_timeout():
+	pass # Replace with function body.
+#CAN FIRE FIREBALL AFTER COOLDOWN
+func _on_fire_ball_cd_timeout():
+	fireBallReady = true;
+	$FireBallCD.start()
