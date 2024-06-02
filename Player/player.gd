@@ -31,6 +31,7 @@ signal staminaChanged #Bars will catch this signal
 @export var staminaRecoverRate: float = 0.5;
 @export var staminaDepletion: float = 0.5;
 @onready var staminaDepleated: bool = false;
+@onready var staminaRecovery: bool = false;
 #CHAKRA
 signal chakraChanged
 @export var maxChakra: float = 80;
@@ -47,11 +48,13 @@ signal chakraChanged
 func _physics_process(delta):
 	if(tutorialDojo.paused == false): #IF MENU ISN'T OPENED
 		directionControl() #DETERMINES DIRECTION FOR METHODS BELOW !!NEEDS TO BE FIRST TO COMMIT!!
+		timerControl()
 		movement(delta,func():staminaControl())
 		move_and_slide()
 		updateAnimation()
 		combat()
 		chakraControl()
+		
 #MOVEMENT - ALLOWS PLAYER TO MOVE, BUT DOESN'T CHANGE ANIMATIONS!
 func movement(delta,staminaCheck:Callable):
 	staminaCheck.call()
@@ -62,7 +65,7 @@ func movement(delta,staminaCheck:Callable):
 				position.x += moveDirection * sprintSpeed * delta
 				currentSpeed = sprintSpeed
 			#WALK MOVEMENT
-			elif(!Input.is_action_pressed("sprint") || staminaDepleated):
+			elif(!Input.is_action_pressed("sprint") or staminaDepleated):
 				position.x += moveDirection * speed * delta
 				currentSpeed = speed
 		#JUMP MOVEMENT
@@ -122,27 +125,28 @@ func staminaControl():
 		staminaDepleated = true
 	elif (currentStamina == maxStamina):
 		staminaDepleated = false
+		staminaRecovery = false
+	#WHEN PERFORMING ANY MOVEMENT
 	if(is_on_floor()):
 		#IDLE STAMINA RECOVERY
-		if(moveDirection == 0):
-			if (currentStamina + staminaRecoverRate*2 < maxStamina):
-				currentStamina += staminaRecoverRate *2
-			else:
-				currentStamina = maxStamina
-		else:
-			#WALK STAMINA RECOVERY
-			if(moveDirection != 0):
-				if(!Input.is_action_pressed("sprint") || staminaDepleated):
-					if (currentStamina + staminaRecoverRate < maxStamina):
-						currentStamina += staminaRecoverRate
-					else:
-						currentStamina = maxStamina
-				#RUN STAMINA DEPLETION
+		if(staminaRecovery):
+			if(moveDirection == 0):
+				if (currentStamina + staminaRecoverRate*2 < maxStamina):
+					currentStamina += staminaRecoverRate *2
 				else:
-					if (currentStamina > 0):
-						currentStamina -= staminaDepletion
-	if(Input.is_action_just_pressed("jump")and currentStamina >= 10 and staminaDepleated == false):
-		currentStamina -= 10
+					currentStamina = maxStamina
+			else:
+				#WALK STAMINA RECOVERY
+				if(moveDirection != 0):
+					if(!Input.is_action_pressed("sprint") or staminaDepleated):
+						if (currentStamina + staminaRecoverRate < maxStamina):
+							currentStamina += staminaRecoverRate
+						else:
+							currentStamina = maxStamina
+		if (currentStamina > 0 and moveDirection != 0 and Input.is_action_pressed("sprint") and staminaDepleated == false):
+			currentStamina -= staminaDepletion
+		if(Input.is_action_just_pressed("jump")and currentStamina >= 10 and staminaDepleated == false):
+			currentStamina -= 10
 	staminaChanged.emit()
 #DIRECTION_CONTROL
 func directionControl():
@@ -164,10 +168,14 @@ func chakraControl():
 	elif(Input.is_action_pressed("regenerateChakra")):
 		currentChakra = maxChakra
 		chakraChanged.emit()
-#TIMERS - ON_TIME_OUT
+#TIMERS
+func timerControl():
+	var inputDirection = animationDirection.to_lower()
+	if Input.is_action_just_released(inputDirection) or Input.is_action_just_released("sprint") and is_on_floor():
+		$StaminaRecover.start()
 #STAMINA STARTS RECOVERING AFTER COOLDOWN
 func _on_stamina_recover_timeout():
-	pass # Replace with function body.
+	staminaRecovery = true;
 #CAN FIRE FIREBALL AFTER COOLDOWN
 func _on_fire_ball_cd_timeout():
 	fireBallReady = true;
