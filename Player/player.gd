@@ -3,21 +3,18 @@ extends CharacterBody2D
 class_name Player
 #References
 @onready var animation = $AnimationPlayer #References animation file
-@onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #Library for gravity
+@onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #LIBRARY FOR GRAVITY
 @export var tutorialDojo: TutorialDojo
 @onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall1.tscn")
 @onready var dojoScene = get_tree().get_root().get_node("tutorialLevel")
 
-#Movement declaration
-#Walk
-@export var speed : int = 100
-#Run
-@export var sprintSpeed: int = 225
-#Jump
-@onready var jumpLock = false;
-@onready var jumpLockSpeed = false;
-@export var jumpVelocity: int  = -400
-@onready var currentSpeed: float
+#MOVEMENT
+#SPEED
+@export var speed : int = 100 #WALK SPEED
+@export var sprintSpeed: int = 225 #RUN SPEED
+@export var jumpVelocity: int  = -400 #jUMP SPEED
+@onready var currentSpeed: int = speed #HOLDS CURRENT PLAYER SPEED WHEN PLAYER JUMPS
+#BOOL
 @onready var direction = "Right";
 @onready var lastMoveDirection_combat = 1;
 
@@ -48,74 +45,49 @@ signal chakraChanged
 
 #Handle movement
 func movement(delta, moveDirection):
-	#If the game is paused
-	if(tutorialDojo.paused == false):
-		#This controls if stamina has been depleated
-		if (currentStamina == 0):
-			staminaDepleated = true
-		elif (currentStamina == floor(maxStamina)):
-			staminaDepleated = false
-		#Run, walk ,idle
-		#Locks speed before jumping
-		if(jumpLockSpeed == false):
-			#Is running
-			if (Input.is_action_pressed("sprint") and staminaDepleated == false and moveDirection != 0 and is_on_floor()):
-				velocity.x = moveDirection * sprintSpeed
+	if(is_on_floor()):
+		if(moveDirection != 0):
+			#RUN MOVEMENT
+			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
+				position.x += moveDirection * sprintSpeed * delta
 				currentSpeed = sprintSpeed
-				if (currentStamina > 0):
-					currentStamina -= staminaDepletion
-					staminaChanged.emit()
-			#Is walking
-			elif(is_on_floor() and moveDirection != 0 and !Input.is_action_pressed("sprint")):
-				velocity.x = moveDirection * speed
+			#WALK MOVEMENT
+			elif(!Input.is_action_pressed("sprint") || staminaDepleated):
+				position.x += moveDirection * speed * delta
 				currentSpeed = speed
-				if (currentStamina + staminaRecoverRate < maxStamina):
-					currentStamina += staminaRecoverRate
-					staminaChanged.emit()
-				else:
-					currentStamina = maxStamina
-			#Is idle
-			elif(moveDirection == 0 and is_on_floor() and !Input.is_action_pressed("sprint")):
-				velocity.x = 0
-				if (currentStamina + staminaRecoverRate*2 < maxStamina):
-					currentStamina += staminaRecoverRate *2
-					staminaChanged.emit()
-				else:
-					currentStamina = maxStamina
-					staminaChanged.emit()
-		#Wants to jump
-		if Input.is_action_just_pressed("jump") and is_on_floor() and currentStamina >= 10 and staminaDepleated == false:
-			jumpLockSpeed = true
+		#JUMP MOVEMENT
+		if Input.is_action_just_pressed("jump") and currentStamina >= 10 and staminaDepleated == false:
 			velocity.y = jumpVelocity
-			currentStamina -= 10
-			staminaChanged.emit()
-		#Is falling
-		if not is_on_floor():
-			velocity.y += gravity * delta
-			velocity.x = currentSpeed * moveDirection
-		else:
-			jumpLockSpeed = false;
+	else:
+		#APPLY GRAVITY
+		velocity.y += gravity * delta
+		position.x += currentSpeed * moveDirection *delta
+			
 #Handle animations
 func updateAnimation(moveDirection):
-	if(tutorialDojo.paused == false):
-		if moveDirection == 1: 
-			direction = "Right"
-		elif moveDirection == -1:
-			direction = "Left"
-		var lastMoveDirection = direction
+	#DETERMINES THE DIRECTION OF ANIMATION
+	if moveDirection == 1: 
+		direction = "Right"
+	elif moveDirection == -1:
+		direction = "Left"
+	#IS ON FLOOR ANIMATIONS
+	if is_on_floor():
+		#IDLE ANIMATION
+		if moveDirection == 0:
+			animation.play("idle"+ direction)
+		#WALK AND RUN ANIMATION
+		elif (moveDirection != 0):
+			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
+				animation.play("run"+direction)
+			else:
+				animation.play("walk"+direction)
+	else :
+		#JUMP ANIMATION
 		if velocity.y < 0:
 			animation.play("jump"+ direction)
-			jumpLock = true
+		#FALL ANIMATION
 		elif velocity.y > 0:
 			animation.play("fall"+ direction)
-			jumpLock = false
-		elif is_on_floor() and moveDirection == 0:
-			animation.play("idle"+ lastMoveDirection)
-		elif (Input.is_action_pressed("left") or Input.is_action_pressed("right")) and is_on_floor() and jumpLock == false and velocity.y >= 0 :
-			if (Input.is_action_pressed("sprint") and (direction == "Left" or direction == "Right")) and currentStamina > 0 and staminaDepleated == false:
-				animation.play("run"+direction)
-			elif direction == "Left" or direction == "Right":
-				animation.play("walk"+direction)
 func combat(moveDirection):
 	#Katana combat
 	#Chakra combat
@@ -146,13 +118,14 @@ func _physics_process(delta):
 	var moveDirection = 0
 	if (Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 		moveDirection = Input.get_axis("left", "right");
-	if(moveDirection == 1 or moveDirection == -1):
-			lastMoveDirection_combat = moveDirection
-	movement(delta, moveDirection)
-	updateAnimation(moveDirection)
-	move_and_slide()
-	combat(moveDirection)
-	chakraRegen()
+	if(tutorialDojo.paused == false):
+		movement(delta, moveDirection)
+		staminaControl(moveDirection)
+		updateAnimation(moveDirection)
+		move_and_slide()
+		combat(moveDirection)
+		chakraRegen()
+		
 #Registers, when the player will colide with enemy.
 func _on_hurt_box_area_entered(area):
 	if area.name == "enemyArea":
@@ -161,3 +134,31 @@ func _on_hurt_box_area_entered(area):
 func _on_fire_ball_cd_timeout():
 	fireBallReady = true;
 	$FireBallCD.start()
+func staminaControl(moveDirection):
+	#STAMINA DEPLETION CONTROL
+	if (currentStamina == 0):
+		staminaDepleated = true
+	elif (currentStamina == maxStamina):
+		staminaDepleated = false
+	if(is_on_floor()):
+		#IDLE STAMINA RECOVERY
+		if(moveDirection == 0):
+			if (currentStamina + staminaRecoverRate*2 < maxStamina):
+				currentStamina += staminaRecoverRate *2
+			else:
+				currentStamina = maxStamina
+		else:
+			#WALK STAMINA RECOVERY
+			if(moveDirection != 0):
+				if(!Input.is_action_pressed("sprint") || staminaDepleated):
+					if (currentStamina + staminaRecoverRate < maxStamina):
+						currentStamina += staminaRecoverRate
+					else:
+						currentStamina = maxStamina
+				#RUN STAMINA DEPLETION
+				else:
+					if (currentStamina > 0):
+						currentStamina -= staminaDepletion
+		if(Input.is_action_just_pressed("jump")and currentStamina >= 10 and staminaDepleated == false):
+			currentStamina -= 10
+	staminaChanged.emit()
