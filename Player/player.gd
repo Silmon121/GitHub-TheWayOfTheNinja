@@ -43,7 +43,6 @@ signal chakraChanged
 #UNARMED_COMBAT
 #ARMED_COMBAT
 #CHAKRA_COMBAT
-
 #OCCURS CONTINUOUSLY THROUGHOUT THE GAME
 func _physics_process(delta):
 	if(tutorialDojo.paused == false): #IF MENU ISN'T OPENED
@@ -62,13 +61,19 @@ func movement(delta,staminaCheck:Callable):
 			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
 				position.x += moveDirection * sprintSpeed * delta
 				currentSpeed = sprintSpeed
+				$WalkFootsteps.stop()
 			#WALK MOVEMENT
 			elif(!Input.is_action_pressed("sprint") or staminaDepleated):
 				position.x += moveDirection * speed * delta
 				currentSpeed = speed
+				if(!$WalkFootsteps.playing):
+					$WalkFootsteps.play()
+		else:
+			$WalkFootsteps.stop()
 		#JUMP MOVEMENT
 		if Input.is_action_just_pressed("jump") and currentStamina >= 10 and staminaDepleated == false:
 			velocity.y = jumpVelocity
+			$WalkFootsteps.stop()
 	else:
 		#APPLY GRAVITY
 		velocity.y += gravity * delta
@@ -108,6 +113,7 @@ func combat():
 			fireBall1_instance.spawnRot = 0
 			fireBall1_instance.spawnPos = global_position+ Vector2(30,0)
 		dojoScene.add_child.call_deferred(fireBall1_instance)
+		$FireBallCast.play()
 		currentChakra -= fireball1_cast
 		chakraChanged.emit()
 #COLIDE REGISTRATION

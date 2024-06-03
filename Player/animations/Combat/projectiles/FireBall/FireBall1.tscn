@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bih8pbmx2k0uf"]
+[gd_scene load_steps=6 format=3 uid="uid://bih8pbmx2k0uf"]
 
 [ext_resource type="Script" path="res://Player/animations/Combat/projectiles/FireBall/FireBall1.gd" id="1_pim24"]
 [ext_resource type="Texture2D" uid="uid://brc87or8cq5ft" path="res://Player/animations/Combat/projectiles/FireBall/fireball1.png" id="2_jerd3"]
+[ext_resource type="AudioStream" uid="uid://dy5b3r2ui7svo" path="res://Audio/SoundEffects/fireBallHit.mp3" id="3_emq4e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r3ldn"]
 radius = 12.0
@@ -28,5 +29,8 @@ position = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="fireBall1Area"]
 shape = SubResource("CapsuleShape2D_w6sue")
+
+[node name="FireBallHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_emq4e")
 
 [connection signal="area_entered" from="fireBall1Area" to="." method="_on_fire_ball_1_area_area_entered"]

@@ -1,12 +1,14 @@
-[gd_scene load_steps=24 format=3 uid="uid://db2a7f7j8y7gj"]
+[gd_scene load_steps=26 format=3 uid="uid://db2a7f7j8y7gj"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_1f6qp"]
-[ext_resource type="Texture2D" uid="uid://bewh6c575n655" path="res://Player/animations/Movement/Player_fall_animation_siluette.png" id="2_t1psx"]
+[ext_resource type="Texture2D" uid="uid://bewh6c575n655" path="res://Player/animations/Movement/Player_fall_animation.png" id="3_ijiq8"]
 [ext_resource type="Texture2D" uid="uid://cayjsmevj5hlm" path="res://Player/animations/Movement/Player_idle_animation.png" id="3_llm42"]
 [ext_resource type="Texture2D" uid="uid://c5ql801wyjdif" path="res://Player/animations/Combat/Player_katana-attack1_animation_siluette.png" id="4_inyqh"]
 [ext_resource type="Texture2D" uid="uid://mrng74yguyr8" path="res://Player/animations/Movement/Player_jump_animation.png" id="4_vpfrf"]
 [ext_resource type="Texture2D" uid="uid://7ry1w7ndmwes" path="res://Player/animations/Movement/Player_Run_animation.png" id="5_11vn8"]
 [ext_resource type="Texture2D" uid="uid://c1p25cdakfn4m" path="res://Player/animations/Movement/Player_walk_animation.png" id="6_qwsgl"]
+[ext_resource type="AudioStream" uid="uid://e2x1q5aqlg0d" path="res://Audio/SoundEffects/FireBall cast.mp3" id="8_07x7e"]
+[ext_resource type="AudioStream" uid="uid://wxa2v43x8fu8" path="res://Audio/SoundEffects/footsteps_on_wooden_floor.mp3" id="9_074co"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3u1ws"]
 size = Vector2(35, 85)
@@ -134,7 +136,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_t1psx")]
+"values": [ExtResource("3_ijiq8")]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -221,7 +223,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_t1psx")]
+"values": [ExtResource("3_ijiq8")]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1184,6 +1186,12 @@ autostart = true
 [node name="StaminaRecover" type="Timer" parent="."]
 wait_time = 0.7
 one_shot = true
+
+[node name="FireBallCast" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_07x7e")
+
+[node name="WalkFootsteps" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_074co")
 
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="timeout" from="FireBallCD" to="." method="_on_fire_ball_cd_timeout"]

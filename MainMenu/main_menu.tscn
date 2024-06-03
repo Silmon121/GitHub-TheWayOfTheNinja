@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://MainMenu/main_menu.gd" id="1_uh7pg"]
 [ext_resource type="Texture2D" uid="uid://dgb7rugkmitm7" path="res://MainMenu/Sprites/MainMenu_BG.png" id="2_1gvo6"]
-[ext_resource type="AudioStream" uid="uid://8022m231oyov" path="res://Music/MainMenuSong.wav" id="3_y7m4p"]
+[ext_resource type="AudioStream" uid="uid://8022m231oyov" path="res://Audio/Music/MainMenuSong.wav" id="3_3cu57"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jlktm"]
 font_size = 30
@@ -79,7 +79,7 @@ position = Vector2(320, 160.759)
 texture = ExtResource("2_1gvo6")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_y7m4p")
+stream = ExtResource("3_3cu57")
 autoplay = true
 
 [connection signal="pressed" from="MarginContainer - Buttons/VBoxContainer/startButton" to="." method="_on_start_button_pressed"]
