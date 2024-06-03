@@ -170,6 +170,7 @@ func chakraControl():
 		currentChakra = maxChakra
 		chakraChanged.emit()
 #TIMERS
+#FUNCTION THAT CHECKS IF TIMERS HAVE TO BE STARTED
 func timerControl(): #CONTROLS WHEN TO START TIMER
 	var inputDirection = animationDirection.to_lower()
 	if(is_on_floor()):
