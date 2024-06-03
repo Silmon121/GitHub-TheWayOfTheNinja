@@ -54,10 +54,8 @@ func _physics_process(delta):
 		updateAnimation()
 		combat()
 		chakraControl()
-		
 #MOVEMENT - ALLOWS PLAYER TO MOVE, BUT DOESN'T CHANGE ANIMATIONS!
 func movement(delta,staminaCheck:Callable):
-	staminaCheck.call()
 	if(is_on_floor()):
 		if(moveDirection != 0):
 			#RUN MOVEMENT
@@ -75,6 +73,7 @@ func movement(delta,staminaCheck:Callable):
 		#APPLY GRAVITY
 		velocity.y += gravity * delta
 		position.x += currentSpeed * moveDirection *delta
+	staminaCheck.call()
 #ANIMATIONS - ALLOWS TO CHANGE PLAYER ANIMATIONS, BUT DOESN'T MAKE HIM MOVE!
 func updateAnimation():
 	#IS ON FLOOR ANIMATIONS
@@ -125,7 +124,9 @@ func staminaControl():
 		staminaDepleated = true
 	elif (currentStamina == maxStamina):
 		staminaDepleated = false
+	if(Input.is_action_pressed("sprint")and staminaDepleated == false) or (Input.is_action_just_pressed("jump") and is_on_floor() and !staminaDepleated):
 		staminaRecovery = false
+		$StaminaRecover.stop()
 	#WHEN PERFORMING ANY MOVEMENT
 	if(is_on_floor()):
 		#IDLE STAMINA RECOVERY
@@ -172,8 +173,9 @@ func chakraControl():
 func timerControl(): #CONTROLS WHEN TO START TIMER
 	var inputDirection = animationDirection.to_lower()
 	if(is_on_floor()):
-		if Input.is_action_just_released(inputDirection) or Input.is_action_just_released("sprint") or(Input.is_action_pressed("sprint") and staminaDepleated):
-			$StaminaRecover.start()
+		if (!Input.is_action_pressed("sprint") or staminaDepleated ) and !Input.is_action_just_pressed("jump"):
+			if($StaminaRecover.time_left == 0):
+				$StaminaRecover.start()
 #STAMINA STARTS RECOVERING AFTER COOLDOWN
 func _on_stamina_recover_timeout():
 	staminaRecovery = true;
