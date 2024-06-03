@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://co33xhu0ohae3"]
+[gd_scene load_steps=22 format=3 uid="uid://co33xhu0ohae3"]
 
 [ext_resource type="Script" path="res://Levels/Tutorial_level/tutorialLevel.gd" id="1_lqasv"]
 [ext_resource type="Texture2D" uid="uid://cb5ebl814ojfa" path="res://Levels/Tutorial_level/Sprites/Dojo/DojoTileSet/Dojo_TileSet.png" id="2_6hrmw"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://UI/Bars/StaminaCounter.gd" id="14_d0oim"]
 [ext_resource type="Script" path="res://UI/Bars/ChakraBar.gd" id="16_4ay4v"]
 [ext_resource type="Script" path="res://UI/Bars/ChakraCounter.gd" id="17_14ter"]
+[ext_resource type="AudioStream" uid="uid://cebc7t0lknvni" path="res://Music/DojoMusic.wav" id="18_3hna8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3rrs4"]
 texture = ExtResource("2_6hrmw")
@@ -390,3 +391,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("17_14ter")
 player = NodePath("../../../../TileMap/Player")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_3hna8")
+autoplay = true

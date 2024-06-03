@@ -10,3 +10,4 @@ func _on_exit_button_pressed():
 func _ready():
 	ProjectSettings.set_setting("display/window/size/window_width_override", 2560)
 	ProjectSettings.set_setting("display/window/size/window_height_override", 1440)
+	
