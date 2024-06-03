@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://brc87or8cq5ft"
-path="res://.godot/imported/fireball1.png-39ccf330ebdbd18f5086f0e1d5234f1f.ctex"
+path="res://.godot/imported/fireball1.png-dc8944809fc5298e3a47a1df38d75a54.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/animations/Combat/projectiles/fireball1.png"
-dest_files=["res://.godot/imported/fireball1.png-39ccf330ebdbd18f5086f0e1d5234f1f.ctex"]
+source_file="res://Player/animations/Combat/projectiles/FireBall/fireball1.png"
+dest_files=["res://.godot/imported/fireball1.png-dc8944809fc5298e3a47a1df38d75a54.ctex"]
 
 [params]
 

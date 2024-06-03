@@ -5,8 +5,8 @@ class_name Player
 @onready var animation = $AnimationPlayer #References animation file
 @onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #LIBRARY FOR GRAVITY
 @export var tutorialDojo: TutorialDojo
-@onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall1.tscn")
-@onready var dojoScene = get_tree().get_root().get_node("tutorialLevel")
+@onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall/FireBall1.tscn")
+@onready var dojoScene = get_tree().get_root().get_node("tutorialLevel") #USED IN CREATING PROJECTILES IN COMBAT
 
 #MOVEMENT
 #SPEED
@@ -169,7 +169,7 @@ func chakraControl():
 		currentChakra = maxChakra
 		chakraChanged.emit()
 #TIMERS
-func timerControl():
+func timerControl(): #CONTROLS WHEN TO START TIMER
 	var inputDirection = animationDirection.to_lower()
 	if Input.is_action_just_released(inputDirection) or Input.is_action_just_released("sprint")  and is_on_floor():
 		$StaminaRecover.start()

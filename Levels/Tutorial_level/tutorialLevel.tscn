@@ -10,13 +10,13 @@
 [ext_resource type="Script" path="res://UI/Bars/Health_bar.gd" id="7_5hwvl"]
 [ext_resource type="Texture2D" uid="uid://bdkpvd32t2k6t" path="res://UI/Bars/Sprites/Stamina_Bar_progress.png" id="8_eqbcp"]
 [ext_resource type="Texture2D" uid="uid://dwj21ufo0eato" path="res://UI/Bars/Sprites/Chakra_Bar_progress.png" id="9_1hq05"]
-[ext_resource type="Script" path="res://Levels/Tutorial_level/HPCounter.gd" id="11_jgig7"]
+[ext_resource type="Script" path="res://UI/Bars/HPCounter.gd" id="11_oqb03"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="11_xargs"]
 [ext_resource type="PackedScene" uid="uid://biyyvm7twpla0" path="res://Levels/Tutorial_level/Sprites/Dojo/training_dummy.tscn" id="12_5kryg"]
-[ext_resource type="Script" path="res://Levels/Tutorial_level/Stamina.gd" id="12_m1ybi"]
-[ext_resource type="Script" path="res://Levels/Tutorial_level/Chakra.gd" id="14_gekfv"]
-[ext_resource type="Script" path="res://Levels/Tutorial_level/StaminaCounter.gd" id="14_hpm0b"]
-[ext_resource type="Script" path="res://Levels/Tutorial_level/ChakraCounter.gd" id="17_b32cd"]
+[ext_resource type="Script" path="res://UI/Bars/Stamina.gd" id="13_xofcy"]
+[ext_resource type="Script" path="res://UI/Bars/StaminaCounter.gd" id="14_d0oim"]
+[ext_resource type="Script" path="res://UI/Bars/Chakra.gd" id="16_3srp2"]
+[ext_resource type="Script" path="res://UI/Bars/ChakraCounter.gd" id="17_14ter"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3rrs4"]
 texture = ExtResource("1_0n3xj")
@@ -337,7 +337,7 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("11_jgig7")
+script = ExtResource("11_oqb03")
 player = NodePath("../../../../TileMap/Player")
 
 [node name="Stamina" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
@@ -347,7 +347,7 @@ offset_bottom = 25.0
 value = 100.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("8_eqbcp")
-script = ExtResource("12_m1ybi")
+script = ExtResource("13_xofcy")
 player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
@@ -362,7 +362,7 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("14_hpm0b")
+script = ExtResource("14_d0oim")
 player = NodePath("../../../../TileMap/Player")
 
 [node name="Chakra" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
@@ -373,7 +373,7 @@ max_value = 50.0
 value = 50.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("9_1hq05")
-script = ExtResource("14_gekfv")
+script = ExtResource("16_3srp2")
 player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
@@ -388,5 +388,5 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("17_b32cd")
+script = ExtResource("17_14ter")
 player = NodePath("../../../../TileMap/Player")
