@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://bfl7xai0k6x52"]
 
-[ext_resource type="Texture2D" uid="uid://dojqhoag8tcwy" path="res://Levels/Tutorial_level/Sprites/Garden/Garden_Tileset.png" id="1_2gmvj"]
+[ext_resource type="Texture2D" uid="uid://dojqhoag8tcwy" path="res://Levels/Tutorial_level/Sprites/Garden/GardenTileSet/Garden_Tileset.png" id="1_tjfjw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_vag8a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8u5n"]
-texture = ExtResource("1_2gmvj")
+texture = ExtResource("1_tjfjw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0

@@ -1,25 +1,25 @@
 [gd_scene load_steps=21 format=3 uid="uid://co33xhu0ohae3"]
 
-[ext_resource type="Texture2D" uid="uid://cb5ebl814ojfa" path="res://Levels/Tutorial_level/Sprites/Dojo/Tile_set/Dojo_TileSet.png" id="1_0n3xj"]
 [ext_resource type="Script" path="res://Levels/Tutorial_level/tutorialLevel.gd" id="1_lqasv"]
+[ext_resource type="Texture2D" uid="uid://cb5ebl814ojfa" path="res://Levels/Tutorial_level/Sprites/Dojo/DojoTileSet/Dojo_TileSet.png" id="2_6hrmw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_sjk47"]
 [ext_resource type="Texture2D" uid="uid://bns361qinapt2" path="res://Levels/Tutorial_level/Sprites/Dojo/Weapon rack.png" id="3_87nft"]
 [ext_resource type="Texture2D" uid="uid://bsjuyfvabqqe7" path="res://Levels/Tutorial_level/Sprites/Dojo/BG_sky.png" id="4_dqs8f"]
 [ext_resource type="Texture2D" uid="uid://d15rtacau277y" path="res://UI/Bars/Sprites/Health_Bar_case.png" id="5_nrvco"]
 [ext_resource type="Texture2D" uid="uid://cyv8xa2hkviuk" path="res://UI/Bars/Sprites/Health_Bar_progress.png" id="6_4r5mj"]
-[ext_resource type="Script" path="res://UI/Bars/Health_bar.gd" id="7_5hwvl"]
 [ext_resource type="Texture2D" uid="uid://bdkpvd32t2k6t" path="res://UI/Bars/Sprites/Stamina_Bar_progress.png" id="8_eqbcp"]
 [ext_resource type="Texture2D" uid="uid://dwj21ufo0eato" path="res://UI/Bars/Sprites/Chakra_Bar_progress.png" id="9_1hq05"]
-[ext_resource type="Script" path="res://UI/Bars/HPCounter.gd" id="11_oqb03"]
+[ext_resource type="Script" path="res://UI/Bars/HealthBar.gd" id="10_dh7b6"]
+[ext_resource type="Script" path="res://UI/Bars/HealthCounter.gd" id="11_03uno"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="11_xargs"]
 [ext_resource type="PackedScene" uid="uid://biyyvm7twpla0" path="res://Levels/Tutorial_level/Sprites/Dojo/training_dummy.tscn" id="12_5kryg"]
-[ext_resource type="Script" path="res://UI/Bars/Stamina.gd" id="13_xofcy"]
+[ext_resource type="Script" path="res://UI/Bars/StaminaBar.gd" id="13_dbr5f"]
 [ext_resource type="Script" path="res://UI/Bars/StaminaCounter.gd" id="14_d0oim"]
-[ext_resource type="Script" path="res://UI/Bars/Chakra.gd" id="16_3srp2"]
+[ext_resource type="Script" path="res://UI/Bars/ChakraBar.gd" id="16_4ay4v"]
 [ext_resource type="Script" path="res://UI/Bars/ChakraCounter.gd" id="17_14ter"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3rrs4"]
-texture = ExtResource("1_0n3xj")
+texture = ExtResource("2_6hrmw")
 texture_region_size = Vector2i(32, 32)
 0:5/0 = 0
 0:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -322,7 +322,7 @@ offset_bottom = 12.0
 value = 100.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("6_4r5mj")
-script = ExtResource("7_5hwvl")
+script = ExtResource("10_dh7b6")
 player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
@@ -337,7 +337,7 @@ layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("11_oqb03")
+script = ExtResource("11_03uno")
 player = NodePath("../../../../TileMap/Player")
 
 [node name="Stamina" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
@@ -347,7 +347,7 @@ offset_bottom = 25.0
 value = 100.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("8_eqbcp")
-script = ExtResource("13_xofcy")
+script = ExtResource("13_dbr5f")
 player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
@@ -373,7 +373,7 @@ max_value = 50.0
 value = 50.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("9_1hq05")
-script = ExtResource("16_3srp2")
+script = ExtResource("16_4ay4v")
 player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 

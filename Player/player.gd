@@ -138,7 +138,7 @@ func staminaControl():
 			else:
 				#WALK STAMINA RECOVERY
 				if(moveDirection != 0):
-					if(!Input.is_action_pressed("sprint") or staminaDepleated):
+					if(!(Input.is_action_pressed("sprint")) || staminaDepleated == true):
 						if (currentStamina + staminaRecoverRate < maxStamina):
 							currentStamina += staminaRecoverRate
 						else:
@@ -171,10 +171,9 @@ func chakraControl():
 #TIMERS
 func timerControl(): #CONTROLS WHEN TO START TIMER
 	var inputDirection = animationDirection.to_lower()
-	if Input.is_action_just_released(inputDirection) or Input.is_action_just_released("sprint")  and is_on_floor():
-		$StaminaRecover.start()
-	elif staminaDepleated and Input.is_action_pressed("sprint"):
-		$StaminaRecover.start()
+	if(is_on_floor()):
+		if Input.is_action_just_released(inputDirection) or Input.is_action_just_released("sprint") or(Input.is_action_pressed("sprint") and staminaDepleated):
+			$StaminaRecover.start()
 #STAMINA STARTS RECOVERING AFTER COOLDOWN
 func _on_stamina_recover_timeout():
 	staminaRecovery = true;
