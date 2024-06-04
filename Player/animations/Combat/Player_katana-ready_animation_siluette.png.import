@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5ql801wyjdif"
-path="res://.godot/imported/Player_katana-attack1_animation_siluette.png-b83db0379b2f30b7577abe8342eaa449.ctex"
+uid="uid://b88m22o43haxh"
+path="res://.godot/imported/Player_katana-ready_animation_siluette.png-9d6962885b49b83f447e58025f11c565.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/animations/Combat/Player_katana-attack1_animation_siluette.png"
-dest_files=["res://.godot/imported/Player_katana-attack1_animation_siluette.png-b83db0379b2f30b7577abe8342eaa449.ctex"]
+source_file="res://Player/animations/Combat/Player_katana-ready_animation_siluette.png"
+dest_files=["res://.godot/imported/Player_katana-ready_animation_siluette.png-9d6962885b49b83f447e58025f11c565.ctex"]
 
 [params]
 

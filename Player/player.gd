@@ -40,6 +40,7 @@ signal chakraChanged
 @export var fireball1_cast: float = 20;
 @onready var fireBallReady: bool = true;
 #COMBAT
+@onready var attack = false
 #UNARMED_COMBAT
 #ARMED_COMBAT
 #CHAKRA_COMBAT
@@ -55,52 +56,61 @@ func _physics_process(delta):
 		chakraControl()
 #MOVEMENT - ALLOWS PLAYER TO MOVE, BUT DOESN'T CHANGE ANIMATIONS!
 func movement(delta,staminaCheck:Callable):
-	if(is_on_floor()):
-		if(moveDirection != 0):
-			#RUN MOVEMENT
-			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
-				position.x += moveDirection * sprintSpeed * delta
-				currentSpeed = sprintSpeed
+	if Input.is_action_just_pressed("attack"):
+		attack = true
+	if(!attack):
+		if(is_on_floor()):
+			if(moveDirection != 0):
+				#RUN MOVEMENT
+				if (Input.is_action_pressed("sprint") and staminaDepleated == false):
+					position.x += moveDirection * sprintSpeed * delta
+					currentSpeed = sprintSpeed
+					$WalkFootsteps.stop()
+				#WALK MOVEMENT
+				elif(!Input.is_action_pressed("sprint") or staminaDepleated):
+					position.x += moveDirection * speed * delta
+					currentSpeed = speed
+					if(!$WalkFootsteps.playing):
+						$WalkFootsteps.play()
+			else:
 				$WalkFootsteps.stop()
-			#WALK MOVEMENT
-			elif(!Input.is_action_pressed("sprint") or staminaDepleated):
-				position.x += moveDirection * speed * delta
-				currentSpeed = speed
-				if(!$WalkFootsteps.playing):
-					$WalkFootsteps.play()
+			
+			#JUMP MOVEMENT
+			if Input.is_action_just_pressed("jump") and currentStamina >= 10 and staminaDepleated == false:
+				velocity.y = jumpVelocity
+				$WalkFootsteps.stop()
 		else:
-			$WalkFootsteps.stop()
-		#JUMP MOVEMENT
-		if Input.is_action_just_pressed("jump") and currentStamina >= 10 and staminaDepleated == false:
-			velocity.y = jumpVelocity
-			$WalkFootsteps.stop()
-	else:
-		#APPLY GRAVITY
-		velocity.y += gravity * delta
-		position.x += currentSpeed * moveDirection *delta
+			#APPLY GRAVITY
+			velocity.y += gravity * delta
+			position.x += currentSpeed * moveDirection *delta
 	staminaCheck.call()
 #ANIMATIONS - ALLOWS TO CHANGE PLAYER ANIMATIONS, BUT DOESN'T MAKE HIM MOVE!
 func updateAnimation():
 	#IS ON FLOOR ANIMATIONS
-	if is_on_floor():
-		#IDLE ANIMATION
-		if moveDirection == 0:
-			animation.play("idle"+ animationDirection)
-		#WALK AND RUN ANIMATION
-		elif (moveDirection != 0):
-			if (Input.is_action_pressed("sprint") and staminaDepleated == false):
-				animation.play("run"+animationDirection)
-			else:
-				animation.play("walk"+animationDirection)
-	else :
-		#JUMP ANIMATION
-		if velocity.y < 0:
-			animation.play("jump"+ animationDirection)
-		#FALL ANIMATION
-		elif velocity.y > 0:
-			animation.play("fall"+ animationDirection)
+	if(!attack):
+		if is_on_floor():
+			#IDLE ANIMATION
+			if moveDirection == 0:
+				animation.play("idle"+ animationDirection)
+			#WALK AND RUN ANIMATION
+			elif (moveDirection != 0):
+				if (Input.is_action_pressed("sprint") and staminaDepleated == false):
+					animation.play("run"+animationDirection)
+				else:
+					animation.play("walk"+animationDirection)
+		else :
+			#JUMP ANIMATION
+			if velocity.y < 0:
+				animation.play("jump"+ animationDirection)
+			#FALL ANIMATION
+			elif velocity.y > 0:
+				animation.play("fall"+ animationDirection)
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():
+	#MELEE_COMBAT
+	if(Input.is_action_just_pressed("attack") and attack):
+		attack = true
+		animation.play("katanaAttack1"+ animationDirection)
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
@@ -190,3 +200,6 @@ func _on_stamina_recover_timeout():
 func _on_fire_ball_cd_timeout():
 	fireBallReady = true;
 	$FireBallCD.start()
+func _on_animation_player_animation_finished(anim_name):
+	if(anim_name == "katanaAttack1Right" or anim_name == "katanaAttack1Left"):
+		attack = false

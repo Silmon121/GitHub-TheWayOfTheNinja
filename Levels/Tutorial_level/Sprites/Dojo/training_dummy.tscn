@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://biyyvm7twpla0"]
+[gd_scene load_steps=5 format=3 uid="uid://biyyvm7twpla0"]
 
 [ext_resource type="Texture2D" uid="uid://cexdols0swtjo" path="res://Levels/Tutorial_level/Sprites/Dojo/trainingDummy.png" id="1_8grj5"]
+[ext_resource type="Script" path="res://Levels/Tutorial_level/Sprites/Dojo/training_dummy.gd" id="1_xymy8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j1r5q"]
 radius = 7.0
@@ -12,6 +13,7 @@ height = 74.0
 
 [node name="trainingDummy" type="CharacterBody2D"]
 collision_layer = 2
+script = ExtResource("1_xymy8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
@@ -26,3 +28,7 @@ texture = ExtResource("1_8grj5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitArea"]
 position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_u3866")
+
+[node name="DamageNumberOrigin" type="Node2D" parent="."]
+
+[connection signal="area_entered" from="hitArea" to="." method="_on_hit_area_area_entered"]
