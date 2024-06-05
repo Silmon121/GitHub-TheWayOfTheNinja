@@ -1,18 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://bfl7xai0k6x52"]
+[gd_scene load_steps=8 format=3 uid="uid://bfl7xai0k6x52"]
 
+[ext_resource type="Script" path="res://Levels/Tutorial_level/tutorialLevelGarden.gd" id="1_4gx5a"]
 [ext_resource type="Texture2D" uid="uid://dojqhoag8tcwy" path="res://Levels/Tutorial_level/Sprites/Garden/GardenTileSet/Garden_Tileset.png" id="1_tjfjw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_vag8a"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="3_q1qgy"]
-[ext_resource type="Texture2D" uid="uid://d15rtacau277y" path="res://UI/Bars/Sprites/Health_Bar_case.png" id="5_kwuio"]
-[ext_resource type="Texture2D" uid="uid://cyv8xa2hkviuk" path="res://UI/Bars/Sprites/Health_Bar_progress.png" id="6_bx6pb"]
-[ext_resource type="Script" path="res://UI/Bars/HealthBar.gd" id="7_ybjaf"]
-[ext_resource type="Script" path="res://UI/Bars/HealthCounter.gd" id="8_jekl5"]
-[ext_resource type="Texture2D" uid="uid://bdkpvd32t2k6t" path="res://UI/Bars/Sprites/Stamina_Bar_progress.png" id="9_47fue"]
-[ext_resource type="Script" path="res://UI/Bars/StaminaBar.gd" id="10_cha5u"]
-[ext_resource type="Script" path="res://UI/Bars/StaminaCounter.gd" id="11_h77gi"]
-[ext_resource type="Texture2D" uid="uid://dwj21ufo0eato" path="res://UI/Bars/Sprites/Chakra_Bar_progress.png" id="12_57bu4"]
-[ext_resource type="Script" path="res://UI/Bars/ChakraBar.gd" id="13_kqab0"]
-[ext_resource type="Script" path="res://UI/Bars/ChakraCounter.gd" id="14_gesvh"]
+[ext_resource type="PackedScene" uid="uid://d38fvd88jrdip" path="res://UIScene.tscn" id="4_wsapu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8u5n"]
 texture = ExtResource("1_tjfjw")
@@ -58,10 +50,8 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_o8u5n")
 
-[sub_resource type="LabelSettings" id="LabelSettings_4i5oi"]
-font_size = 6
-
 [node name="TutorialLevel_Garden" type="Node2D"]
+script = ExtResource("1_4gx5a")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_4hrqm")
@@ -91,73 +81,5 @@ editor_draw_drag_margin = true
 [node name="pauseMenu" parent="TileMap/Player/Camera2D3/CanvasLayer" instance=ExtResource("3_q1qgy")]
 visible = false
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="Health" type="TextureProgressBar" parent="UI"]
-offset_right = 108.0
-offset_bottom = 12.0
-value = 100.0
-texture_under = ExtResource("5_kwuio")
-texture_progress = ExtResource("6_bx6pb")
-script = ExtResource("7_ybjaf")
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Health"]
-layout_mode = 0
-offset_right = 108.0
-offset_bottom = 12.0
-alignment = 1
-
-[node name="HPCounter" type="Label" parent="UI/Health/VBoxContainer"]
-layout_mode = 2
-label_settings = SubResource("LabelSettings_4i5oi")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("8_jekl5")
-
-[node name="Stamina" type="TextureProgressBar" parent="UI"]
-offset_top = 13.0
-offset_right = 108.0
-offset_bottom = 25.0
-value = 100.0
-texture_under = ExtResource("5_kwuio")
-texture_progress = ExtResource("9_47fue")
-script = ExtResource("10_cha5u")
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Stamina"]
-layout_mode = 0
-offset_right = 108.0
-offset_bottom = 12.0
-alignment = 1
-
-[node name="StaminaCounter" type="Label" parent="UI/Stamina/VBoxContainer"]
-layout_mode = 2
-label_settings = SubResource("LabelSettings_4i5oi")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("11_h77gi")
-
-[node name="Chakra" type="TextureProgressBar" parent="UI"]
-offset_top = 26.0
-offset_right = 108.0
-offset_bottom = 38.0
-max_value = 50.0
-value = 50.0
-texture_under = ExtResource("5_kwuio")
-texture_progress = ExtResource("12_57bu4")
-script = ExtResource("13_kqab0")
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Chakra"]
-layout_mode = 0
-offset_right = 108.0
-offset_bottom = 12.0
-alignment = 1
-
-[node name="ChakraCounter" type="Label" parent="UI/Chakra/VBoxContainer"]
-layout_mode = 2
-label_settings = SubResource("LabelSettings_4i5oi")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("14_gesvh")
+[node name="UI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_wsapu")]
+player = NodePath("../TileMap/Player")

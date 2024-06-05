@@ -43,9 +43,14 @@ vertical_alignment = 1
 layout_mode = 2
 text = "Resume"
 
+[node name="Button" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Back to main menu"
+
 [node name="exitButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
 
 [connection signal="pressed" from="Panel/VBoxContainer/resumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/exitButton" to="." method="_on_exit_button_pressed"]

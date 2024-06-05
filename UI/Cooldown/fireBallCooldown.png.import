@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsjuyfvabqqe7"
-path="res://.godot/imported/BG_sky.png-66285201f1d55a3afe22983766234678.ctex"
+uid="uid://bgbma7cyshe35"
+path="res://.godot/imported/fireBallCooldown.png-6d1bffc7216ef539769211e5b2370caf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/Tutorial_level/Sprites/Dojo/BG_sky.png"
-dest_files=["res://.godot/imported/BG_sky.png-66285201f1d55a3afe22983766234678.ctex"]
+source_file="res://UI/Cooldown/fireBallCooldown.png"
+dest_files=["res://.godot/imported/fireBallCooldown.png-6d1bffc7216ef539769211e5b2370caf.ctex"]
 
 [params]
 

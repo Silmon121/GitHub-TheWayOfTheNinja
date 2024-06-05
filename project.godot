@@ -18,12 +18,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 DamageNumbers="*res://AutoloadScripts/damageNumbers/damageNumbers.gd"
+globalChange="*res://globalChange.gd"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=320
-window/size/mode=3
+window/size/mode=2
 window/size/window_width_override=2560
 window/size/window_height_override=1440
 window/stretch/mode="canvas_items"
@@ -74,6 +75,11 @@ regenerateChakra={
 castSpell1={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"key_label":0,"unicode":119,"echo":false,"script":null)
+]
+}
+interact={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"echo":false,"script":null)
 ]
 }
 
