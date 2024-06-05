@@ -316,14 +316,13 @@ texture = ExtResource("4_dqs8f")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Health" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
+[node name="Health" type="TextureProgressBar" parent="UI"]
 offset_right = 108.0
 offset_bottom = 12.0
 value = 100.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("6_4r5mj")
 script = ExtResource("10_dh7b6")
-player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Health"]
@@ -332,15 +331,14 @@ offset_right = 108.0
 offset_bottom = 12.0
 alignment = 1
 
-[node name="HPCounter" type="Label" parent="UI/Health/VBoxContainer" node_paths=PackedStringArray("player")]
+[node name="HPCounter" type="Label" parent="UI/Health/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("11_03uno")
-player = NodePath("../../../../TileMap/Player")
 
-[node name="Stamina" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
+[node name="Stamina" type="TextureProgressBar" parent="UI"]
 offset_top = 13.0
 offset_right = 108.0
 offset_bottom = 25.0
@@ -348,7 +346,6 @@ value = 100.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("8_eqbcp")
 script = ExtResource("13_dbr5f")
-player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Stamina"]
@@ -357,15 +354,14 @@ offset_right = 108.0
 offset_bottom = 12.0
 alignment = 1
 
-[node name="StaminaCounter" type="Label" parent="UI/Stamina/VBoxContainer" node_paths=PackedStringArray("player")]
+[node name="StaminaCounter" type="Label" parent="UI/Stamina/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("14_d0oim")
-player = NodePath("../../../../TileMap/Player")
 
-[node name="Chakra" type="TextureProgressBar" parent="UI" node_paths=PackedStringArray("player")]
+[node name="Chakra" type="TextureProgressBar" parent="UI"]
 offset_top = 26.0
 offset_right = 108.0
 offset_bottom = 38.0
@@ -374,7 +370,6 @@ value = 50.0
 texture_under = ExtResource("5_nrvco")
 texture_progress = ExtResource("9_1hq05")
 script = ExtResource("16_4ay4v")
-player = NodePath("../../TileMap/Player")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Chakra"]
@@ -383,13 +378,12 @@ offset_right = 108.0
 offset_bottom = 12.0
 alignment = 1
 
-[node name="ChakraCounter" type="Label" parent="UI/Chakra/VBoxContainer" node_paths=PackedStringArray("player")]
+[node name="ChakraCounter" type="Label" parent="UI/Chakra/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1d4qy")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("17_14ter")
-player = NodePath("../../../../TileMap/Player")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_kyp8m")

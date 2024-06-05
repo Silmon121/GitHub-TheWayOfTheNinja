@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DamageNumbers="*res://AutoloadScripts/damageNumbers/damageNumbers.gd"
+PauseMenu="*res://PauseMenu/pause_menu.gd"
 
 [display]
 

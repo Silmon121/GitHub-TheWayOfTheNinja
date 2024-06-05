@@ -1,12 +1,11 @@
 extends CharacterBody2D
-
 class_name Player
 #References
-@onready var animation = $AnimationPlayer #References animation file
+@onready var animation = %AnimationPlayer #References animation file
 @onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #LIBRARY FOR GRAVITY
-@export var tutorialDojo: TutorialDojo
 @onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall/FireBall1.tscn")
-@onready var dojoScene = get_tree().get_root().get_node("tutorialLevel") #USED IN CREATING PROJECTILES IN COMBAT
+@onready var currentScene #USED IN CREATING PROJECTILES IN COMBAT
+@onready var staminaRecoverTimer = %StaminaRecover
 
 #MOVEMENT
 #SPEED
@@ -45,8 +44,10 @@ signal chakraChanged
 #ARMED_COMBAT
 #CHAKRA_COMBAT
 #OCCURS CONTINUOUSLY THROUGHOUT THE GAME
+func _ready():
+	levelControl()
 func _physics_process(delta):
-	if(tutorialDojo.paused == false): #IF MENU ISN'T OPENED
+	if(PauseMenu.paused == false): #IF MENU ISN'T OPENED
 		directionControl() #DETERMINES DIRECTION FOR METHODS BELOW !!NEEDS TO BE FIRST TO COMMIT!!
 		timerControl()
 		movement(delta,func():staminaControl())
@@ -87,30 +88,32 @@ func movement(delta,staminaCheck:Callable):
 #ANIMATIONS - ALLOWS TO CHANGE PLAYER ANIMATIONS, BUT DOESN'T MAKE HIM MOVE!
 func updateAnimation():
 	#IS ON FLOOR ANIMATIONS
-	if(!attack):
-		if is_on_floor():
-			#IDLE ANIMATION
-			if moveDirection == 0:
-				animation.play("idle"+ animationDirection)
-			#WALK AND RUN ANIMATION
-			elif (moveDirection != 0):
-				if (Input.is_action_pressed("sprint") and staminaDepleated == false):
-					animation.play("run"+animationDirection)
-				else:
-					animation.play("walk"+animationDirection)
-		else :
-			#JUMP ANIMATION
-			if velocity.y < 0:
-				animation.play("jump"+ animationDirection)
-			#FALL ANIMATION
-			elif velocity.y > 0:
-				animation.play("fall"+ animationDirection)
+	if(animation != null):
+		if(!attack):
+			if is_on_floor():
+				#IDLE ANIMATION
+				if moveDirection == 0:
+					animation.play("idle"+ animationDirection)
+				#WALK AND RUN ANIMATION
+				elif (moveDirection != 0):
+					if (Input.is_action_pressed("sprint") and staminaDepleated == false):
+						animation.play("run"+animationDirection)
+					else:
+						animation.play("walk"+animationDirection)
+			else :
+				#JUMP ANIMATION
+				if velocity.y < 0:
+					animation.play("jump"+ animationDirection)
+				#FALL ANIMATION
+				elif velocity.y > 0:
+					animation.play("fall"+ animationDirection)
+		else:
+			animation.play("katanaAttack1"+ animationDirection)
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():
 	#MELEE_COMBAT
-	if(Input.is_action_just_pressed("attack") and attack):
+	if(Input.is_action_just_pressed("attack") and attack ):
 		attack = true
-		animation.play("katanaAttack1"+ animationDirection)
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
@@ -122,7 +125,7 @@ func combat():
 		else:
 			fireBall1_instance.spawnRot = 0
 			fireBall1_instance.spawnPos = global_position+ Vector2(30,0)
-		dojoScene.add_child.call_deferred(fireBall1_instance)
+		currentScene.add_child.call_deferred(fireBall1_instance)
 		$FireBallCast.play()
 		currentChakra -= fireball1_cast
 		chakraChanged.emit()
@@ -142,7 +145,7 @@ func staminaControl():
 		staminaDepleated = false
 	if(Input.is_action_pressed("sprint")and staminaDepleated == false) or (Input.is_action_just_pressed("jump") and is_on_floor() and !staminaDepleated):
 		staminaRecovery = false
-		$StaminaRecover.stop()
+		staminaRecoverTimer.stop()
 	#WHEN PERFORMING ANY MOVEMENT
 	if(is_on_floor()):
 		#IDLE STAMINA RECOVERY
@@ -191,8 +194,8 @@ func timerControl(): #CONTROLS WHEN TO START TIMER
 	var inputDirection = animationDirection.to_lower()
 	if(is_on_floor()):
 		if (!Input.is_action_pressed("sprint") or staminaDepleated ) and !Input.is_action_just_pressed("jump"):
-			if($StaminaRecover.time_left == 0):
-				$StaminaRecover.start()
+			if(staminaRecoverTimer.time_left == 0):
+				staminaRecoverTimer.start()
 #STAMINA STARTS RECOVERING AFTER COOLDOWN
 func _on_stamina_recover_timeout():
 	staminaRecovery = true;
@@ -203,3 +206,8 @@ func _on_fire_ball_cd_timeout():
 func _on_animation_player_animation_finished(anim_name):
 	if(anim_name == "katanaAttack1Right" or anim_name == "katanaAttack1Left"):
 		attack = false
+func levelControl():
+	if(get_tree().get_root().get_node("tutorialLevel") != null):
+		currentScene = get_tree().get_root().get_node("tutorialLevel")
+	else:
+		currentScene = get_tree().get_root().get_node("TutorialLevel_Garden")
