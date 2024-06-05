@@ -6,6 +6,7 @@ class_name Player
 @onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall/FireBall1.tscn")
 @onready var currentScene #USED IN CREATING PROJECTILES IN COMBAT
 @onready var staminaRecoverTimer = %StaminaRecover
+@export var pauseMenu : PauseMenu
 
 #MOVEMENT
 #SPEED
@@ -36,7 +37,7 @@ signal chakraChanged
 @export var maxChakra: float = 80;
 @onready var currentChakra: float = maxChakra;
 @export var chakraRecoveryRate: float = 0.5;
-@export var fireball1_cast: float = 20;
+@export var fireball1_cast: float = 10;
 @onready var fireBallReady: bool = true;
 #COMBAT
 @onready var attack = false
@@ -47,7 +48,7 @@ signal chakraChanged
 func _ready():
 	levelControl()
 func _physics_process(delta):
-	if(PauseMenu.paused == false): #IF MENU ISN'T OPENED
+	if(pauseMenu.paused == false): #IF MENU ISN'T OPENED
 		directionControl() #DETERMINES DIRECTION FOR METHODS BELOW !!NEEDS TO BE FIRST TO COMMIT!!
 		timerControl()
 		movement(delta,func():staminaControl())
@@ -107,7 +108,7 @@ func updateAnimation():
 				#FALL ANIMATION
 				elif velocity.y > 0:
 					animation.play("fall"+ animationDirection)
-		else:
+		elif attack and Input.is_action_just_pressed("attack"):
 			animation.play("katanaAttack1"+ animationDirection)
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():

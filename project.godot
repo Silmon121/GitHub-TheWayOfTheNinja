@@ -18,13 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 DamageNumbers="*res://AutoloadScripts/damageNumbers/damageNumbers.gd"
-PauseMenu="*res://PauseMenu/pause_menu.gd"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=320
-window/size/mode=2
+window/size/mode=3
 window/size/window_width_override=2560
 window/size/window_height_override=1440
 window/stretch/mode="canvas_items"

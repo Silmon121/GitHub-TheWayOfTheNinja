@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://d38fvd88jrdip"]
+
+[ext_resource type="Script" path="res://UIScene.gd" id="1_1j2un"]
+[ext_resource type="Texture2D" uid="uid://d15rtacau277y" path="res://UI/Bars/Sprites/Health_Bar_case.png" id="1_fu162"]
+[ext_resource type="Texture2D" uid="uid://cyv8xa2hkviuk" path="res://UI/Bars/Sprites/Health_Bar_progress.png" id="2_kgjfl"]
+[ext_resource type="Script" path="res://UI/Bars/HealthBar.gd" id="3_iq8yt"]
+[ext_resource type="Script" path="res://UI/Bars/HealthCounter.gd" id="4_nsuro"]
+[ext_resource type="Texture2D" uid="uid://bdkpvd32t2k6t" path="res://UI/Bars/Sprites/Stamina_Bar_progress.png" id="5_3aefj"]
+[ext_resource type="Script" path="res://UI/Bars/StaminaBar.gd" id="6_x5brr"]
+[ext_resource type="Script" path="res://UI/Bars/StaminaCounter.gd" id="7_ktc3a"]
+[ext_resource type="Texture2D" uid="uid://dwj21ufo0eato" path="res://UI/Bars/Sprites/Chakra_Bar_progress.png" id="8_kc7g3"]
+[ext_resource type="Script" path="res://UI/Bars/ChakraBar.gd" id="9_w5mb5"]
+[ext_resource type="Script" path="res://UI/Bars/ChakraCounter.gd" id="10_upgum"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2db4j"]
+font_size = 6
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_1j2un")
+
+[node name="Health" type="TextureProgressBar" parent="." node_paths=PackedStringArray("ui")]
+offset_right = 108.0
+offset_bottom = 12.0
+value = 100.0
+texture_under = ExtResource("1_fu162")
+texture_progress = ExtResource("2_kgjfl")
+script = ExtResource("3_iq8yt")
+ui = NodePath("..")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Health"]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 12.0
+alignment = 1
+
+[node name="HPCounter" type="Label" parent="Health/VBoxContainer" node_paths=PackedStringArray("ui")]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_2db4j")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_nsuro")
+ui = NodePath("../../..")
+
+[node name="Stamina" type="TextureProgressBar" parent="." node_paths=PackedStringArray("ui")]
+offset_top = 13.0
+offset_right = 108.0
+offset_bottom = 25.0
+value = 100.0
+texture_under = ExtResource("1_fu162")
+texture_progress = ExtResource("5_3aefj")
+script = ExtResource("6_x5brr")
+ui = NodePath("..")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Stamina"]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 12.0
+alignment = 1
+
+[node name="StaminaCounter" type="Label" parent="Stamina/VBoxContainer" node_paths=PackedStringArray("ui")]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_2db4j")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_ktc3a")
+ui = NodePath("../../..")
+
+[node name="Chakra" type="TextureProgressBar" parent="." node_paths=PackedStringArray("ui")]
+offset_top = 26.0
+offset_right = 108.0
+offset_bottom = 38.0
+max_value = 50.0
+value = 50.0
+texture_under = ExtResource("1_fu162")
+texture_progress = ExtResource("8_kc7g3")
+script = ExtResource("9_w5mb5")
+ui = NodePath("..")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Chakra"]
+layout_mode = 0
+offset_right = 108.0
+offset_bottom = 12.0
+alignment = 1
+
+[node name="ChakraCounter" type="Label" parent="Chakra/VBoxContainer" node_paths=PackedStringArray("ui")]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_2db4j")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("10_upgum")
+ui = NodePath("../../..")

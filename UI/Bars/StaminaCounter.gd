@@ -1,5 +1,6 @@
 extends Label
-@export var player: Player
+@export var ui : UI
+@onready var player = ui.player 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	self.text = str(floor(player.currentStamina)) + "/"+ str(player.maxStamina)

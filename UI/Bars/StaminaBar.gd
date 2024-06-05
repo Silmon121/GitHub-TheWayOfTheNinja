@@ -1,6 +1,7 @@
 extends TextureProgressBar
 
-@export var player: Player
+@export var ui : UI
+@onready var player = ui.player 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.staminaChanged.connect(updateStamina)
