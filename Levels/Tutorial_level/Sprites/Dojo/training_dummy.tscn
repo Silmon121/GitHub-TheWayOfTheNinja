@@ -11,7 +11,7 @@ height = 74.0
 radius = 7.0
 height = 74.0
 
-[node name="trainingDummy" type="CharacterBody2D"]
+[node name="Shuriken" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_xymy8")
 
@@ -32,4 +32,3 @@ shape = SubResource("CapsuleShape2D_u3866")
 [node name="DamageNumberOrigin" type="Node2D" parent="."]
 
 [connection signal="area_entered" from="hitArea" to="." method="_on_hit_area_area_entered"]
-[connection signal="area_exited" from="hitArea" to="." method="_on_hit_area_area_exited"]

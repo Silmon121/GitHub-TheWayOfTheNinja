@@ -1632,11 +1632,14 @@ shape = SubResource("RectangleShape2D_ips6j")
 [node name="FireBallCD" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
-autostart = true
 
 [node name="StaminaRecover" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.7
+one_shot = true
+
+[node name="ShurikenCD" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="FireBallCast" type="AudioStreamPlayer2D" parent="."]

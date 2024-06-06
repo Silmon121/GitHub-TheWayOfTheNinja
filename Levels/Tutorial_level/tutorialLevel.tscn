@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://co33xhu0ohae3"]
+[gd_scene load_steps=22 format=3 uid="uid://co33xhu0ohae3"]
 
 [ext_resource type="Texture2D" uid="uid://cb5ebl814ojfa" path="res://Levels/Tutorial_level/Sprites/Dojo/DojoTileSet/Dojo_TileSet.png" id="2_6hrmw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_sjk47"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" path="res://Levels/Tutorial_level/fireBallGuide.gd" id="13_bf88s"]
 [ext_resource type="Script" path="res://Levels/Tutorial_level/nextLevelGuide.gd" id="13_rusjd"]
 [ext_resource type="Script" path="res://Levels/Tutorial_level/chakraRestoreGuide.gd" id="14_7lshp"]
+[ext_resource type="Script" path="res://Levels/Tutorial_level/kunaiGuide.gd" id="14_moy2b"]
+[ext_resource type="Script" path="res://Levels/Tutorial_level/throwShuriken.gd" id="15_udti8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3rrs4"]
 texture = ExtResource("2_6hrmw")
@@ -364,6 +366,26 @@ offset_bottom = 124.0
 text = "Click to attack"
 script = ExtResource("12_vov23")
 
+[node name="kunaiGuide" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 225.0
+offset_top = 100.0
+offset_right = 265.0
+offset_bottom = 123.0
+text = "Press C to throw kunai"
+script = ExtResource("14_moy2b")
+
+[node name="shurikenGuide" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 235.0
+offset_top = 100.0
+offset_right = 275.0
+offset_bottom = 123.0
+text = "Press S to throw shuriken"
+script = ExtResource("15_udti8")
+
 [node name="fireBallGuide" type="Label" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -404,5 +426,7 @@ one_shot = true
 [connection signal="timeout" from="GuideTimer" to="runGuide" method="_on_guide_timer_timeout"]
 [connection signal="timeout" from="GuideTimer" to="jumpGuide" method="_on_guide_timer_timeout"]
 [connection signal="timeout" from="GuideTimer" to="attackGuide" method="_on_guide_timer_timeout"]
+[connection signal="timeout" from="GuideTimer" to="kunaiGuide" method="_on_guide_timer_timeout"]
+[connection signal="timeout" from="GuideTimer" to="shurikenGuide" method="_on_guide_timer_timeout"]
 [connection signal="timeout" from="GuideTimer" to="fireBallGuide" method="_on_guide_timer_timeout"]
 [connection signal="timeout" from="GuideTimer" to="chakraRestoreGuide" method="_on_guide_timer_timeout"]

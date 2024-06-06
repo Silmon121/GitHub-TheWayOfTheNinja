@@ -4,6 +4,8 @@ class_name Player
 @onready var animation = %AnimationPlayer #References animation file
 @onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") #LIBRARY FOR GRAVITY
 @onready var fireBall1 = load("res://Player/animations/Combat/projectiles/FireBall/FireBall1.tscn")
+@onready var shuriken_instance = load("res://Player/animations/Combat/projectiles/Shuriken/Shuriken.tscn")
+@onready var kunai_instance = load("res://Player/animations/Combat/projectiles/Kunai/Kunai.tscn")
 @onready var currentScene #USED IN CREATING PROJECTILES IN COMBAT
 @onready var staminaRecoverTimer = %StaminaRecover
 @export var pauseMenu : PauseMenu
@@ -114,12 +116,32 @@ func updateAnimation():
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():
 	#MELEE_COMBAT
-	if(Input.is_action_just_pressed("attack") and attack and animationFinished ):
+	if(Input.is_action_just_pressed("attack") and attack and animationFinished and is_on_floor()):
 		$KatanaDamageBox/CollisionShape2D.disabled = false
 		attack = true
 		animationFinished = false
 	else:
 		$KatanaDamageBox/CollisionShape2D.disabled = true
+	#THROWING COMBAT
+	#THROW SHURIKEN
+	if(Input.is_action_just_pressed("ThrowKunai")):
+		var kunai = kunai_instance.instantiate()
+		kunai.direction = lastMoveDirection
+		if (lastMoveDirection == -1):
+			kunai.spawnPos = global_position - Vector2(30,0)
+		else:
+			kunai.spawnPos = global_position+ Vector2(30,0)
+		currentScene.add_child.call_deferred(kunai)
+	if(Input.is_action_just_pressed("throwShuriken")):
+		var shuriken= shuriken_instance.instantiate()
+		shuriken.direction = lastMoveDirection
+		if (lastMoveDirection == -1):
+			shuriken.spawnRot = -91.2
+			shuriken.spawnPos = global_position - Vector2(30,0)
+		else:
+			shuriken.spawnRot = 0
+			shuriken.spawnPos = global_position+ Vector2(30,0)
+		currentScene.add_child.call_deferred(shuriken)
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
@@ -133,6 +155,7 @@ func combat():
 			fireBall1_instance.spawnPos = global_position+ Vector2(30,0)
 		currentScene.add_child.call_deferred(fireBall1_instance)
 		$FireBallCast.play()
+		$FireBallCD.start()
 		currentChakra -= fireball1_cast
 		chakraChanged.emit()
 #COLIDE REGISTRATION
@@ -184,8 +207,10 @@ func directionControl():
 	#DETERMINES THE DIRECTION OF ANIMATION
 	if moveDirection == 1: 
 		animationDirection = "Right"
+		globalChange.animationDirection = "Right"
 	elif moveDirection == -1:
 		animationDirection = "Left"
+		globalChange.animationDirection = "Left"
 #CHAKRA_CONTROL
 func chakraControl():
 	if(Input.is_action_pressed("regenerateChakra") and currentChakra + chakraRecoveryRate < maxChakra):
@@ -197,7 +222,6 @@ func chakraControl():
 #TIMERS
 #FUNCTION THAT CHECKS IF TIMERS HAVE TO BE STARTED
 func timerControl(): #CONTROLS WHEN TO START TIMER
-	var inputDirection = animationDirection.to_lower()
 	if(is_on_floor()):
 		if (!Input.is_action_pressed("sprint") or staminaDepleated ) and !Input.is_action_just_pressed("jump"):
 			if(staminaRecoverTimer.time_left == 0):
@@ -208,11 +232,13 @@ func _on_stamina_recover_timeout():
 #CAN FIRE FIREBALL AFTER COOLDOWN
 func _on_fire_ball_cd_timeout():
 	fireBallReady = true;
-	$FireBallCD.start()
+#ANIMATION FINISHED
+#IF ATTACK ANIMATION FINISHED -> YOU CAN MOVE
 func _on_animation_player_animation_finished(anim_name):
 	if(anim_name == "katanaAttack1Right" or anim_name == "katanaAttack1Left"):
 		attack = false
 		animationFinished = true
+#CONTROLS IN WHICH LEVEL PLAYER CURRENTLY IS
 func levelControl():
 	if(get_tree().get_root().get_node("tutorialLevel") != null):
 		currentScene = get_tree().get_root().get_node("tutorialLevel")
