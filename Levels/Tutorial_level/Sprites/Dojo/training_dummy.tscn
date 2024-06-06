@@ -23,7 +23,7 @@ shape = SubResource("CapsuleShape2D_j1r5q")
 position = Vector2(1, -9)
 texture = ExtResource("1_8grj5")
 
-[node name="hitArea" type="Area2D" parent="."]
+[node name="hitArea" type="Area2D" parent="." groups=["Enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitArea"]
 position = Vector2(0, -8)
@@ -32,3 +32,4 @@ shape = SubResource("CapsuleShape2D_u3866")
 [node name="DamageNumberOrigin" type="Node2D" parent="."]
 
 [connection signal="area_entered" from="hitArea" to="." method="_on_hit_area_area_entered"]
+[connection signal="area_exited" from="hitArea" to="." method="_on_hit_area_area_exited"]

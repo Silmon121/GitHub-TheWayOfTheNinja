@@ -270,10 +270,11 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = 5
 layer_2/tile_data = PackedInt32Array(655356, 65538, 7, 589820, 196610, 6, 524284, 196610, 6, 458748, 196610, 6, 393212, 196610, 6, 327676, 196610, 6, 262140, 196610, 6, 196604, 196610, 6, 131068, 196610, 6, 65532, 196610, 6, 655357, 131074, 6, 589821, 327682, 6, 524285, 327682, 6, 458749, 327682, 6, 393213, 327682, 6, 327677, 327682, 6, 262141, 327682, 6, 131069, 327682, 6, 65533, 327682, 6, 196605, 327682, 6, 30, 196610, 6, 65566, 196610, 6, 131102, 196610, 6, 196638, 196610, 6, 262174, 196610, 6, 327710, 196610, 6, 393246, 196610, 6, 458782, 196610, 6, 524318, 196610, 6, 589854, 2, 5, 31, 327682, 6, 65567, 327682, 6, 131103, 327682, 6, 196639, 327682, 6, 262175, 327682, 6, 327711, 327682, 6, 393247, 327682, 6, 458783, 327682, 6, 524319, 327682, 6, 589855, 65538, 7)
 
-[node name="Player" parent="TileMap" node_paths=PackedStringArray("pauseMenu") instance=ExtResource("2_sjk47")]
+[node name="Player" parent="TileMap" instance=ExtResource("2_sjk47")]
 z_index = 1
 position = Vector2(63, 250)
-pauseMenu = NodePath("Camera2D3/CanvasLayer/pauseMenu")
+pauseMenu = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":false,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":15,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":Resource("res://PauseMenu/pause_menu.gd"))
+
 
 [node name="Camera2D3" type="Camera2D" parent="TileMap/Player"]
 limit_left = -128

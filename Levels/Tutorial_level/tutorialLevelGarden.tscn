@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfl7xai0k6x52"]
+[gd_scene load_steps=9 format=3 uid="uid://bfl7xai0k6x52"]
 
 [ext_resource type="Script" path="res://Levels/Tutorial_level/tutorialLevelGarden.gd" id="1_4gx5a"]
 [ext_resource type="Texture2D" uid="uid://dojqhoag8tcwy" path="res://Levels/Tutorial_level/Sprites/Garden/GardenTileSet/Garden_Tileset.png" id="1_tjfjw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_vag8a"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="3_q1qgy"]
 [ext_resource type="PackedScene" uid="uid://d38fvd88jrdip" path="res://UIScene.tscn" id="4_wsapu"]
+[ext_resource type="AudioStream" uid="uid://cebc7t0lknvni" path="res://Audio/Music/GardenSong.wav" id="6_byf8d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8u5n"]
 texture = ExtResource("1_tjfjw")
@@ -83,3 +84,7 @@ visible = false
 
 [node name="UI" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_wsapu")]
 player = NodePath("../TileMap/Player")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_byf8d")
+autoplay = true

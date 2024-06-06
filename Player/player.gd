@@ -41,6 +41,7 @@ signal chakraChanged
 @onready var fireBallReady: bool = true;
 #COMBAT
 @onready var attack = false
+@onready var animationFinished = true
 #UNARMED_COMBAT
 #ARMED_COMBAT
 #CHAKRA_COMBAT
@@ -108,13 +109,17 @@ func updateAnimation():
 				#FALL ANIMATION
 				elif velocity.y > 0:
 					animation.play("fall"+ animationDirection)
-		elif attack and Input.is_action_just_pressed("attack"):
+		elif attack and Input.is_action_just_pressed("attack") and animation and animationFinished:
 			animation.play("katanaAttack1"+ animationDirection)
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():
 	#MELEE_COMBAT
-	if(Input.is_action_just_pressed("attack") and attack ):
+	if(Input.is_action_just_pressed("attack") and attack and animationFinished ):
+		$KatanaDamageBox/CollisionShape2D.disabled = false
 		attack = true
+		animationFinished = false
+	else:
+		$KatanaDamageBox/CollisionShape2D.disabled = true
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
@@ -207,6 +212,7 @@ func _on_fire_ball_cd_timeout():
 func _on_animation_player_animation_finished(anim_name):
 	if(anim_name == "katanaAttack1Right" or anim_name == "katanaAttack1Left"):
 		attack = false
+		animationFinished = true
 func levelControl():
 	if(get_tree().get_root().get_node("tutorialLevel") != null):
 		currentScene = get_tree().get_root().get_node("tutorialLevel")

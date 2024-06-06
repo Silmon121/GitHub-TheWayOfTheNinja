@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cebc7t0lknvni"
-path="res://.godot/imported/DojoMusic.wav-b13099bf11d90e5b3f1be46f6b9841e5.sample"
+path="res://.godot/imported/GardenSong.wav-e5cda02ea6817f9e94c8c4556e02bc1b.sample"
 
 [deps]
 
-source_file="res://Audio/Music/DojoMusic.wav"
-dest_files=["res://.godot/imported/DojoMusic.wav-b13099bf11d90e5b3f1be46f6b9841e5.sample"]
+source_file="res://Audio/Music/GardenSong.wav"
+dest_files=["res://.godot/imported/GardenSong.wav-e5cda02ea6817f9e94c8c4556e02bc1b.sample"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b88m22o43haxh"
-path="res://.godot/imported/Player_katana-ready_animation_siluette.png-9d6962885b49b83f447e58025f11c565.ctex"
+uid="uid://cei1kcpjfi3rp"
+path="res://.godot/imported/Player_katana-ready_animation.png-14822ab16a4ececfdd0cf3671fb12ecb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/animations/Combat/Player_katana-ready_animation_siluette.png"
-dest_files=["res://.godot/imported/Player_katana-ready_animation_siluette.png-9d6962885b49b83f447e58025f11c565.ctex"]
+source_file="res://Player/animations/Combat/Player_katana-ready_animation.png"
+dest_files=["res://.godot/imported/Player_katana-ready_animation.png-14822ab16a4ececfdd0cf3671fb12ecb.ctex"]
 
 [params]
 
