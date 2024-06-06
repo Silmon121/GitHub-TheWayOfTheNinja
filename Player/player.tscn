@@ -1630,17 +1630,22 @@ position = Vector2(-0.5, 3)
 shape = SubResource("RectangleShape2D_ips6j")
 
 [node name="FireBallCD" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 3.0
 one_shot = true
 
 [node name="StaminaRecover" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 0.7
+wait_time = 0.5
 one_shot = true
 
 [node name="ShurikenCD" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
+
+[node name="KunaiCD" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.5
 
 [node name="FireBallCast" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_07x7e")
@@ -1659,3 +1664,5 @@ shape = SubResource("RectangleShape2D_bs364")
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="timeout" from="FireBallCD" to="." method="_on_fire_ball_cd_timeout"]
 [connection signal="timeout" from="StaminaRecover" to="." method="_on_stamina_recover_timeout"]
+[connection signal="timeout" from="ShurikenCD" to="." method="_on_shuriken_cd_timeout"]
+[connection signal="timeout" from="KunaiCD" to="." method="_on_kunai_cd_timeout"]

@@ -12,8 +12,6 @@ func _ready():
 	$AnimationPlayer.play("Kunai"+globalChange.animationDirection)
 func destroy():
 	queue_free()
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	destroy()
 
 
 func _on_kunai_area_area_entered(area):

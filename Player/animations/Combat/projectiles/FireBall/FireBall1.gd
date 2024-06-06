@@ -13,8 +13,6 @@ func _ready():
 	
 func destroy():
 	queue_free()
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	destroy()
 func _on_fire_ball_1_area_area_entered(area):
 	if(area.name == "hitArea"):
 		$FireBallHit.play()

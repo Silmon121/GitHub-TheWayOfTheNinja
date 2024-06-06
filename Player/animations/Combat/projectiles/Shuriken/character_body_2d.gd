@@ -13,8 +13,6 @@ func _ready():
 	$AnimationPlayer.play("flyingShuriken"+globalChange.animationDirection)
 func destroy():
 	queue_free()
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	destroy()
 func _on_shuriken_area_area_entered(area):
 	if(area.name == "hitArea"):
 		destroy()

@@ -44,6 +44,8 @@ signal chakraChanged
 #COMBAT
 @onready var attack = false
 @onready var animationFinished = true
+@onready var shurikenReady = true;
+@onready var kunaiReady = true;
 #UNARMED_COMBAT
 #ARMED_COMBAT
 #CHAKRA_COMBAT
@@ -61,7 +63,7 @@ func _physics_process(delta):
 		chakraControl()
 #MOVEMENT - ALLOWS PLAYER TO MOVE, BUT DOESN'T CHANGE ANIMATIONS!
 func movement(delta,staminaCheck:Callable):
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and is_on_floor():
 		attack = true
 	if(!attack):
 		if(is_on_floor()):
@@ -111,7 +113,7 @@ func updateAnimation():
 				#FALL ANIMATION
 				elif velocity.y > 0:
 					animation.play("fall"+ animationDirection)
-		elif attack and Input.is_action_just_pressed("attack") and animation and animationFinished:
+		elif attack and Input.is_action_just_pressed("attack") and animationFinished and is_on_floor():
 			animation.play("katanaAttack1"+ animationDirection)
 #COMBAT - ALLOWS PLAYER TO ATTACK
 func combat():
@@ -124,17 +126,20 @@ func combat():
 		$KatanaDamageBox/CollisionShape2D.disabled = true
 	#THROWING COMBAT
 	#THROW SHURIKEN
-	if(Input.is_action_just_pressed("ThrowKunai")):
+	if(Input.is_action_just_pressed("ThrowKunai") and kunaiReady):
 		var kunai = kunai_instance.instantiate()
 		kunai.direction = lastMoveDirection
+		kunaiReady = false
 		if (lastMoveDirection == -1):
 			kunai.spawnPos = global_position - Vector2(30,0)
 		else:
 			kunai.spawnPos = global_position+ Vector2(30,0)
 		currentScene.add_child.call_deferred(kunai)
-	if(Input.is_action_just_pressed("throwShuriken")):
+		%KunaiCD.start()
+	if(Input.is_action_just_pressed("throwShuriken") and shurikenReady):
 		var shuriken= shuriken_instance.instantiate()
 		shuriken.direction = lastMoveDirection
+		shurikenReady = false
 		if (lastMoveDirection == -1):
 			shuriken.spawnRot = -91.2
 			shuriken.spawnPos = global_position - Vector2(30,0)
@@ -142,6 +147,7 @@ func combat():
 			shuriken.spawnRot = 0
 			shuriken.spawnPos = global_position+ Vector2(30,0)
 		currentScene.add_child.call_deferred(shuriken)
+		%ShurikenCD.start()
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
 		var fireBall1_instance = fireBall1.instantiate()
@@ -232,6 +238,10 @@ func _on_stamina_recover_timeout():
 #CAN FIRE FIREBALL AFTER COOLDOWN
 func _on_fire_ball_cd_timeout():
 	fireBallReady = true;
+func _on_shuriken_cd_timeout():
+	shurikenReady = true;
+func _on_kunai_cd_timeout():
+	kunaiReady = true;
 #ANIMATION FINISHED
 #IF ATTACK ANIMATION FINISHED -> YOU CAN MOVE
 func _on_animation_player_animation_finished(anim_name):
@@ -244,3 +254,9 @@ func levelControl():
 		currentScene = get_tree().get_root().get_node("tutorialLevel")
 	else:
 		currentScene = get_tree().get_root().get_node("TutorialLevel_Garden")
+
+
+
+
+
+
