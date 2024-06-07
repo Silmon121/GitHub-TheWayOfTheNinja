@@ -163,7 +163,7 @@ func combat():
 		$ShurikenThrow.play()
 		%ShurikenCD.start()
 	#CHAKRA_COMBAT
-	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):
+	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady and !Input.is_action_pressed("regenerateChakra")):
 		var fireBall1_instance = fireBall1.instantiate()
 		fireBall1_instance.direction = lastMoveDirection
 		fireBallReady = false
