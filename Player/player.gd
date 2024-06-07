@@ -20,6 +20,7 @@ class_name Player
 @onready var moveDirection = 0; #MAIN SOURCE FOR OTHER DIRECTION VARIABLES
 @onready var animationDirection = "Right"; #USED IN ANIMATIONS
 @onready var lastMoveDirection = 1; #USED IN COMBAT
+@onready var falling = false;
 #PROGRESS BARS
 #HEALTH
 signal healthChanged
@@ -67,6 +68,9 @@ func movement(delta,staminaCheck:Callable):
 		attack = true
 	if(!attack):
 		if(is_on_floor()):
+			if(falling):
+				falling = false
+				$landOnFloor.play()
 			if(moveDirection != 0):
 				#RUN MOVEMENT
 				if (Input.is_action_pressed("sprint") and staminaDepleated == false):
@@ -96,6 +100,7 @@ func movement(delta,staminaCheck:Callable):
 			#APPLY GRAVITY
 			velocity.y += gravity * delta
 			position.x += currentSpeed * moveDirection *delta
+			falling =true
 	staminaCheck.call()
 #ANIMATIONS - ALLOWS TO CHANGE PLAYER ANIMATIONS, BUT DOESN'T MAKE HIM MOVE!
 func updateAnimation():

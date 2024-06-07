@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://db2a7f7j8y7gj"]
+[gd_scene load_steps=32 format=3 uid="uid://db2a7f7j8y7gj"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_1f6qp"]
 [ext_resource type="Texture2D" uid="uid://bewh6c575n655" path="res://Player/animations/Movement/Player_fall_animation.png" id="3_ijiq8"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bry1blqdsxgbb" path="res://Audio/SoundEffects/KatanaSwing.mp3" id="11_y30eq"]
 [ext_resource type="AudioStream" uid="uid://b2d5063rsp1fr" path="res://Audio/SoundEffects/footstepsRun.mp3" id="12_3is40"]
 [ext_resource type="AudioStream" uid="uid://c773xe57sih8y" path="res://Audio/SoundEffects/kunaiThrow.mp3" id="13_u7x2f"]
+[ext_resource type="AudioStream" uid="uid://de5ccgcvhxwhu" path="res://Audio/SoundEffects/landOnFloor.mp3" id="14_rgpjc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3u1ws"]
 size = Vector2(35, 85)
@@ -1668,6 +1669,9 @@ stream = ExtResource("12_3is40")
 
 [node name="kunaiThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_u7x2f")
+
+[node name="landOnFloor" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_rgpjc")
 
 [node name="KatanaDamageBox" type="Area2D" parent="."]
 unique_name_in_owner = true
