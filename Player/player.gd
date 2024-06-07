@@ -73,19 +73,25 @@ func movement(delta,staminaCheck:Callable):
 					position.x += moveDirection * sprintSpeed * delta
 					currentSpeed = sprintSpeed
 					$WalkFootsteps.stop()
+					if(!$footstepsRun.playing):
+						$footstepsRun.play()
 				#WALK MOVEMENT
 				elif(!Input.is_action_pressed("sprint") or staminaDepleated):
 					position.x += moveDirection * speed * delta
 					currentSpeed = speed
+					$footstepsRun.stop()
 					if(!$WalkFootsteps.playing):
 						$WalkFootsteps.play()
+						
 			else:
 				$WalkFootsteps.stop()
+				$footstepsRun.stop()
 			
 			#JUMP MOVEMENT
 			if Input.is_action_just_pressed("jump") and currentStamina >= 10 and staminaDepleated == false:
 				velocity.y = jumpVelocity
 				$WalkFootsteps.stop()
+				$footstepsRun.stop()
 		else:
 			#APPLY GRAVITY
 			velocity.y += gravity * delta
@@ -122,6 +128,7 @@ func combat():
 		$KatanaDamageBox/CollisionShape2D.disabled = false
 		attack = true
 		animationFinished = false
+		$KatanaSwing.play()
 	else:
 		$KatanaDamageBox/CollisionShape2D.disabled = true
 	#THROWING COMBAT
@@ -135,6 +142,7 @@ func combat():
 		else:
 			kunai.spawnPos = global_position+ Vector2(30,0)
 		currentScene.add_child.call_deferred(kunai)
+		$kunaiThrow.play()
 		%KunaiCD.start()
 	if(Input.is_action_just_pressed("throwShuriken") and shurikenReady):
 		var shuriken= shuriken_instance.instantiate()
@@ -147,6 +155,7 @@ func combat():
 			shuriken.spawnRot = 0
 			shuriken.spawnPos = global_position+ Vector2(30,0)
 		currentScene.add_child.call_deferred(shuriken)
+		$ShurikenThrow.play()
 		%ShurikenCD.start()
 	#CHAKRA_COMBAT
 	if(Input.is_action_just_pressed("castSpell1") and currentChakra > 9 and fireBallReady):

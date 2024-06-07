@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://8022m231oyov"
-path="res://.godot/imported/MainMenuSong.wav-204a579c86edf19abc300ac9e7272b6f.sample"
+path="res://.godot/imported/The journey begins.wav-79dbc8c99785df32939b0537d87ac072.sample"
 
 [deps]
 
-source_file="res://Audio/Music/MainMenuSong.wav"
-dest_files=["res://.godot/imported/MainMenuSong.wav-204a579c86edf19abc300ac9e7272b6f.sample"]
+source_file="res://Audio/Music/The journey begins.wav"
+dest_files=["res://.godot/imported/The journey begins.wav-79dbc8c99785df32939b0537d87ac072.sample"]
 
 [params]
 

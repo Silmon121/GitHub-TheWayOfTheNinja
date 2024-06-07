@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqx4dbwwdgely"]
+[gd_scene load_steps=10 format=3 uid="uid://dqx4dbwwdgely"]
 
 [ext_resource type="Script" path="res://Player/animations/Combat/projectiles/Shuriken/character_body_2d.gd" id="1_2bjpq"]
 [ext_resource type="Texture2D" uid="uid://bvxplagjj33bp" path="res://Player/animations/Combat/projectiles/Shuriken/shuriken_projectile.png" id="1_knxh3"]
+[ext_resource type="AudioStream" uid="uid://cgpuyljgj64r2" path="res://Audio/SoundEffects/shurikenHit.mp3" id="3_s0eve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i7gwk"]
 radius = 10.0499
@@ -227,5 +228,9 @@ vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShurikenArea"]
 shape = SubResource("CircleShape2D_3kwso")
+
+[node name="ShurikenHit" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_s0eve")
 
 [connection signal="area_entered" from="ShurikenArea" to="." method="_on_shuriken_area_area_entered"]

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cebc7t0lknvni"
-path="res://.godot/imported/GardenSong.wav-e5cda02ea6817f9e94c8c4556e02bc1b.sample"
+path="res://.godot/imported/The tranquil breeze.wav-f898f83e16d92940d17ea5c25c5a7312.sample"
 
 [deps]
 
-source_file="res://Audio/Music/GardenSong.wav"
-dest_files=["res://.godot/imported/GardenSong.wav-e5cda02ea6817f9e94c8c4556e02bc1b.sample"]
+source_file="res://Audio/Music/The tranquil breeze.wav"
+dest_files=["res://.godot/imported/The tranquil breeze.wav-f898f83e16d92940d17ea5c25c5a7312.sample"]
 
 [params]
 

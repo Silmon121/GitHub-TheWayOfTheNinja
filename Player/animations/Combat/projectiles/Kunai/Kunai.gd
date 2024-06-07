@@ -16,4 +16,7 @@ func destroy():
 
 func _on_kunai_area_area_entered(area):
 	if(area.name == "hitArea"):
-		destroy()
+		$KunaiHit.play()
+		hide()
+		if(!$KunaiHit.playing):
+			destroy()

@@ -1,8 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://by0e5oojd2wkt"]
+[gd_scene load_steps=6 format=3 uid="uid://by0e5oojd2wkt"]
 
+[ext_resource type="Script" path="res://MainMenu/settings.gd" id="1_amaqj"]
 [ext_resource type="Texture2D" uid="uid://dgb7rugkmitm7" path="res://MainMenu/Sprites/MainMenu_BG.png" id="1_j1v34"]
+[ext_resource type="AudioStream" uid="uid://8022m231oyov" path="res://Audio/Music/The journey begins.wav" id="3_jwp3f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_symwc"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_2ap1k"]
+font_size = 14
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -11,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_amaqj")
 
 [node name="MarginContainer - Buttons" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -19,10 +26,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -63.5448
-offset_right = 59.0
-offset_bottom = 75.4552
+offset_left = -191.0
+offset_top = -149.0
+offset_right = 190.0
+offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -36,13 +43,51 @@ anchor_right = 1.0
 grow_horizontal = 2
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer - Buttons/Panel/VBoxContainer"]
+[node name="HeadLine" type="Label" parent="MarginContainer - Buttons/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 label_settings = SubResource("LabelSettings_symwc")
 horizontal_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer - Buttons/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="WindowMode" type="Label" parent="MarginContainer - Buttons/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Window"
+label_settings = SubResource("LabelSettings_2ap1k")
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer - Buttons/Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer - Buttons/Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Full-Screen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(320, 160)
 texture = ExtResource("1_j1v34")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 259.0
+offset_top = 267.0
+offset_right = 368.0
+offset_bottom = 304.0
+text = "Back"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jwp3f")
+autoplay = true
+
+[connection signal="item_selected" from="MarginContainer - Buttons/Panel/VBoxContainer/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

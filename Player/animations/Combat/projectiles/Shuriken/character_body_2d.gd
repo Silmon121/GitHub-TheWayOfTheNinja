@@ -15,4 +15,7 @@ func destroy():
 	queue_free()
 func _on_shuriken_area_area_entered(area):
 	if(area.name == "hitArea"):
-		destroy()
+		%ShurikenHit.play()
+		hide()
+		if(!%ShurikenHit.playing):
+			destroy()

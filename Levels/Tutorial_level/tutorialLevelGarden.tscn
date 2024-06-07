@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_vag8a"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="3_q1qgy"]
 [ext_resource type="PackedScene" uid="uid://d38fvd88jrdip" path="res://UIScene.tscn" id="4_wsapu"]
-[ext_resource type="AudioStream" uid="uid://cebc7t0lknvni" path="res://Audio/Music/GardenSong.wav" id="6_byf8d"]
+[ext_resource type="AudioStream" uid="uid://cebc7t0lknvni" path="res://Audio/Music/The tranquil breeze.wav" id="6_0b701"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o8u5n"]
 texture = ExtResource("1_tjfjw")
@@ -86,5 +86,5 @@ visible = false
 player = NodePath("../TileMap/Player")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_byf8d")
+stream = ExtResource("6_0b701")
 autoplay = true
