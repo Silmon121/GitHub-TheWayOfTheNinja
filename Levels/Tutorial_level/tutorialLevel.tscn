@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://co33xhu0ohae3"]
+[gd_scene load_steps=23 format=3 uid="uid://co33xhu0ohae3"]
 
 [ext_resource type="Texture2D" uid="uid://cb5ebl814ojfa" path="res://Levels/Tutorial_level/Sprites/Dojo/DojoTileSet/Dojo_TileSet.png" id="2_6hrmw"]
 [ext_resource type="PackedScene" uid="uid://db2a7f7j8y7gj" path="res://Player/player.tscn" id="2_sjk47"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Levels/Tutorial_level/dojoDoorArea.gd" id="7_6hgby"]
 [ext_resource type="PackedScene" uid="uid://d38fvd88jrdip" path="res://UIScene.tscn" id="7_prb1g"]
 [ext_resource type="AudioStream" uid="uid://casc0uxi4dbq0" path="res://Audio/Music/Dojo.wav" id="9_3gg7j"]
+[ext_resource type="PackedScene" uid="uid://bswsq47an50w6" path="res://NPC/Mr_Tuto/Mr_Tuto.tscn" id="9_vqr8r"]
 [ext_resource type="Script" path="res://Levels/Tutorial_level/labels/walkGuide.gd" id="10_glun0"]
 [ext_resource type="Script" path="res://Levels/Tutorial_level/labels/runGuide.gd" id="11_kkqqj"]
 [ext_resource type="PackedScene" uid="uid://b72fqj16r1ugy" path="res://PauseMenu/pause_menu.tscn" id="11_xargs"]
@@ -322,6 +323,9 @@ shape = SubResource("RectangleShape2D_sqij0")
 
 [node name="UI" parent="TileMap" node_paths=PackedStringArray("player") instance=ExtResource("7_prb1g")]
 player = NodePath("../Player")
+
+[node name="MrTuto" parent="TileMap" instance=ExtResource("9_vqr8r")]
+position = Vector2(290, 243)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_3gg7j")

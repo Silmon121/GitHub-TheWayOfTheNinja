@@ -268,9 +268,3 @@ func levelControl():
 		currentScene = get_tree().get_root().get_node("tutorialLevel")
 	else:
 		currentScene = get_tree().get_root().get_node("TutorialLevel_Garden")
-
-
-
-
-
-
